@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Study</string>
+    <string name="app_name">Study Cards</string>
+    <string name="invalid_login">Invalid username or password</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_btn">Log in</string>
+    <string name="sign_up_btn">Sign up</string>
+
 </resources>
