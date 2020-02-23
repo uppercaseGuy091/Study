@@ -2,47 +2,147 @@ package com.lab1.study;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private EditText usernameTxtField = null;
+    private EditText passwordTxtField = null;
+    private TextView invalidTxtView = null;
+    private TextView forgotPasswordTxtView = null;
+    private ScrollView scrollView = null;
+    private CheckBox rememberMe = null;
+    private Button loginBtn = null;
+    private Button signUpBtn = null;
+    private final int SIGN_UP_REQ = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final EditText usernameTxtField = findViewById(R.id.usernameTxtField);
-        final EditText passwordTxtField = findViewById(R.id.passwordTxtField);
-        final TextView invalidTxtView = findViewById(R.id.invalidTxtView);
+        findViews();
+        setViewsOnClickListeners();
+        writeUserSavedInfo();
 
-        Button loginBtn = findViewById(R.id.loginBtn);
+    }
+
+    private void findViews() {
+        usernameTxtField = findViewById(R.id.usernameTxtField);
+        passwordTxtField = findViewById(R.id.passwordTxtField);
+        invalidTxtView = findViewById(R.id.invalidTxtView);
+        scrollView = findViewById(R.id.scrollView);
+        rememberMe = findViewById(R.id.rememberMe);
+        forgotPasswordTxtView = findViewById(R.id.forgotPasswordTxtView);
+        loginBtn = findViewById(R.id.loginBtn);
+        signUpBtn = findViewById(R.id.signUpBtn);
+
+    }
+
+    private void setViewsOnClickListeners() {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                logIn();
+            }
+        });
 
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String username = usernameTxtField.getText().toString();
-                        String password = passwordTxtField.getText().toString();
-                        User user = new User(username, password);
-                        user = user.logIn();
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSignUpActivity();
+            }
+        });
 
-                        if (user != null) {
-                            usernameTxtField.setText(user.getEmail());
-                        } else {
-                            invalidTxtView.setText(R.string.invalid_login);
-                        }
-                    }
-                });
-                thread.start();
+        forgotPasswordTxtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
 
     }
+
+
+    private void writeUserSavedInfo() {
+        ArrayList<String> logInSavedInfo = FileUtils.readFromFile("Remember me.txt", MainActivity.this);
+        if (logInSavedInfo.size() == 2) {
+            usernameTxtField.setText(logInSavedInfo.get(0));
+            passwordTxtField.setText(logInSavedInfo.get(1));
+        }
+
+    }
+
+    private void logIn() {
+        invalidTxtView.setText("");
+        loginBtn.setEnabled(false);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final User verifiedUser = tryTologIn();
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (verifiedUser != null) {
+                            if (rememberMe.isChecked()) {
+                                FileUtils.writeToFile("Remember me.txt", verifiedUser.getUsername()
+                                                + "\r\n" + verifiedUser.getPassword(),
+                                        MainActivity.this);
+                                Intent intent = new Intent(MainActivity.this, SubjectsActivity.class);
+                                intent.putExtra("username", verifiedUser.getUsername());
+                                startActivity(intent);
+                            } else {
+                                FileUtils.writeToFile("Remember me.txt", "", MainActivity.this);
+                            }
+                        } else {
+                            scrollView.scrollTo(0, 0);
+                            invalidTxtView.setText(R.string.invalid_login);
+                        }
+                        loginBtn.setEnabled(true);
+                    }
+                });
+            }
+        });
+        thread.start();
+
+    }
+
+    private User tryTologIn() {
+        String username = usernameTxtField.getText().toString();
+        String password = passwordTxtField.getText().toString();
+        User user = new User(username, password);
+        return user.logIn();
+    }
+
+    private void openSignUpActivity() {
+        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SIGN_UP_REQ) {
+            if ((resultCode == RESULT_OK) && (data != null)) {
+                String username = data.getExtras().getString("username");
+                String password = data.getExtras().getString("password");
+                Toast.makeText(getApplicationContext(), "The account has been successfully created", Toast.LENGTH_LONG).show();
+                usernameTxtField.setText(username);
+                passwordTxtField.setText(password);
+            }
+        }
+    }
+
 }

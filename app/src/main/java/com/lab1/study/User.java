@@ -35,7 +35,6 @@ public class User {
     }
 
     public User logIn() {
-
-        return DbConnection.getInstance().logIn(username,password);
+        return DbConnection.getInstance().logIn(username, password);
     }
 }

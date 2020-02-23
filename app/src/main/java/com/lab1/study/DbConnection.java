@@ -1,7 +1,6 @@
 package com.lab1.study;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.sql.*;
 
@@ -33,25 +32,20 @@ public class DbConnection {
     }
 
     private void cleanUp() {
-        if (resultSet != null) {
-            try {
+        try {
+            if (resultSet != null) {
                 resultSet.close();
-            } catch (SQLException sqlEx) {
             }
-        }
-        if (statement != null) {
-            try {
+            if (statement != null) {
                 statement.close();
-            } catch (SQLException sqlEx) {
             }
-        }
-        if (preparedStatement != null) {
-            try {
+            if (preparedStatement != null) {
                 preparedStatement.close();
-            } catch (SQLException sqlEx) {
             }
-        }
 
+        } catch (SQLException sqlEx) {
+            Log.i("SQLException","Close Exception");
+        }
     }
 
     public User logIn(String username, String password) {
@@ -72,14 +66,73 @@ public class DbConnection {
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 1203) {
-
+                Log.i("SQLException", "There is a limited number of available connections");
             } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
             }
         } finally {
             cleanUp();
         }
 
         return null;
+    }
+
+    public void addUser(String username, String password, String email) throws Exception {
+        try {
+            if (validateUsername(username) && validateEmail(email)) {
+                connect();
+                preparedStatement = connection.prepareStatement("insert into User values(? , ? , ?) ;");
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
+            }
+        } finally {
+            cleanUp();
+        }
+    }
+
+    private boolean validateUsername(String username) throws Exception {
+        if (isExisted("User", "username", username)) {
+            throw new Exception("This username is taken by another user!");
+        }
+        return true;
+    }
+
+    private boolean validateEmail(String email) throws Exception {
+        if ((isExisted("User", "email", email)) && (!email.isEmpty())) {
+            throw new Exception("This email is assigned to another user!");
+        }
+        return true;
+    }
+
+    private boolean isExisted(String table, String columnName, String searchedData) {
+        try {
+            connect();
+            preparedStatement = connection.prepareStatement("select " + columnName + " from " + table + " where " + columnName + " = ?  ;");
+            preparedStatement.setString(1, searchedData);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + " " + e.toString());
+            }
+        } finally {
+            cleanUp();
+        }
+        return false;
     }
 
 }
