@@ -33,8 +33,13 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 hideTxtView();
+                usernameTxtView.setText(SignUpActivity.this.getText(R.string.invalid_username));
 
-                if (passwordTxtField.getText().toString().isEmpty()) {
+                if (usernameTxtField.getText().toString().isEmpty()){
+                    usernameTxtView.setText(SignUpActivity.this.getText(R.string.username));
+                    usernameTxtView.setVisibility(View.VISIBLE);
+                    scrollView.scrollTo(0,0);
+                } else if (passwordTxtField.getText().toString().isEmpty()) {
                     passwordTxtView.setVisibility(View.VISIBLE);
                     scrollView.scrollTo(0, passwordTxtView.getTop());
                 } else if (!passwordTxtField.getText().toString().equals(confirmPasswordTxtField.getText().toString())) {
