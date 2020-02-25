@@ -181,6 +181,8 @@ public class DbConnection {
             } else {
                 Log.i("SQLException", e.getErrorCode() + e.toString());
             }
+        }finally {
+            cleanUp();
         }
 
     }
@@ -201,6 +203,8 @@ public class DbConnection {
             } else {
                 Log.i("SQLException", e.getErrorCode() + e.toString());
             }
+        }finally {
+            cleanUp();
         }
     }
 
@@ -221,6 +225,8 @@ public class DbConnection {
             } else {
                 Log.i("SQLException", e.getErrorCode() + e.toString());
             }
+        }finally {
+            cleanUp();
         }
     }
 
