@@ -149,7 +149,6 @@ public class DbConnection {
             while (resultSet.next()) {
                 subjects.add(resultSet.getString("name"));
             }
-            Log.i("gg", "D!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2B" + subjects.get(0));
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 1203) {
