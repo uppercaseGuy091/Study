@@ -143,8 +143,11 @@ public class DbConnection {
 
         try {
             connect();
-            preparedStatement = connection.prepareStatement("SELECT name FROM Subject");
-            resultSet = preparedStatement.executeQuery();
+            //preparedStatement = connection.prepareStatement("SELECT name FROM Subject");
+            //resultSet = preparedStatement.executeQuery();
+
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT name FROM Subject");
 
             while (resultSet.next()) {
                 subjects.add(resultSet.getString("name"));
@@ -158,6 +161,7 @@ public class DbConnection {
             }
         } finally {
             cleanUp();
+            System.out.println("finally");
         }
         return subjects;
     }
@@ -228,5 +232,6 @@ public class DbConnection {
             cleanUp();
         }
     }
+
 
 }
