@@ -148,13 +148,9 @@ public class DbConnection {
             resultSet = preparedStatement.executeQuery();
 
 
-
             while (resultSet.next()){
                 subjects.add(resultSet.getString("name"));
-
             }
-
-
 
 
         }catch (SQLException e) {
