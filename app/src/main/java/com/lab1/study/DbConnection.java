@@ -2,7 +2,6 @@ package com.lab1.study;
 
 import android.util.Log;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -138,10 +137,9 @@ public class DbConnection {
     }
 
 
+    public ArrayList<String> fetchSubjects() {
 
-    public ArrayList<String> fetchSubjects(){
-
-        ArrayList<String>subjects = new ArrayList<>();
+        ArrayList<String> subjects = new ArrayList<>();
 
         try {
             connect();
@@ -149,12 +147,11 @@ public class DbConnection {
             resultSet = preparedStatement.executeQuery();
 
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 subjects.add(resultSet.getString("name"));
             }
 
-
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             if (e.getErrorCode() == 1203) {
                 Log.i("SQLException", "There is a limited number of available connections");
             } else {
@@ -164,11 +161,7 @@ public class DbConnection {
             cleanUp();
         }
         return subjects;
-        }
-
-
-
-
+    }
 
 
     public void addSubject(String name) {
@@ -179,7 +172,7 @@ public class DbConnection {
                 connect();
                 preparedStatement = connection.prepareStatement("insert into Subject value(?) ;");
                 preparedStatement.setString(1, name);
-            }else{
+            } else {
 
             }
         } catch (SQLException e) {
@@ -192,14 +185,14 @@ public class DbConnection {
 
     }
 
-    public void addDeck(String name){
+    public void addDeck(String name) {
         try {
 
             if (!isExisted("Deck", "name", name)) {
                 connect();
                 preparedStatement = connection.prepareStatement("insert into Deck value(?) ;");
                 preparedStatement.setString(1, name);
-            }else{
+            } else {
 
             }
         } catch (SQLException e) {
@@ -212,15 +205,14 @@ public class DbConnection {
     }
 
 
-
-    public void addCard(String text){
+    public void addCard(String text) {
         try {
 
             if (!isExisted("Card", "text", text)) {
                 connect();
                 preparedStatement = connection.prepareStatement("insert into Card value(?) ;");
                 preparedStatement.setString(1, text);
-            }else{
+            } else {
 
             }
         } catch (SQLException e) {
@@ -232,6 +224,4 @@ public class DbConnection {
         }
     }
 
-
 }
-
