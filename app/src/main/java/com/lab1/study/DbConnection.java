@@ -176,13 +176,13 @@ public class DbConnection {
 
 
 
-    public void addCard(String name){
+    public void addCard(String text){
         try {
 
-            if (!isExisted("Catd", "name", name)) {
+            if (!isExisted("Card", "text", text)) {
                 connect();
                 preparedStatement = connection.prepareStatement("insert into Card value(?) ;");
-                preparedStatement.setString(1, name);
+                preparedStatement.setString(1, text);
             }else{
 
             }
