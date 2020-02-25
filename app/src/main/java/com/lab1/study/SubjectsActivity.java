@@ -18,6 +18,7 @@ public class SubjectsActivity extends AppCompatActivity {
 
         String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
         ArrayList<String> courses = DbConnection.getInstance().fetchSubjects();
+        //String [] courses = {"One", "Two", "Three"};
 
         ListView coursesListView = findViewById(R.id.SubjectListXmlListView);
 
