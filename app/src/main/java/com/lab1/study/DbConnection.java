@@ -2,7 +2,9 @@ package com.lab1.study;
 
 import android.util.Log;
 
+import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class DbConnection {
@@ -134,6 +136,39 @@ public class DbConnection {
         }
         return false;
     }
+
+
+    public ArrayList<String> fetchSubjects(){
+
+        ArrayList<String>subjects = new ArrayList<>();
+
+        try {
+            connect();
+            preparedStatement = connection.prepareStatement("SELECT name FROM Subject");
+            resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()){
+                subjects.add(resultSet.getString("name"));
+            }
+
+
+        }catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
+            }
+        } finally {
+            cleanUp();
+        }
+        return subjects;
+        }
+
+
+
+
+
 
     public void addCourse(String name) {
         try {
