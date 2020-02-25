@@ -138,6 +138,7 @@ public class DbConnection {
     }
 
 
+
     public ArrayList<String> fetchSubjects(){
 
         ArrayList<String>subjects = new ArrayList<>();
@@ -170,7 +171,8 @@ public class DbConnection {
 
 
 
-    public void addCourse(String name) {
+    public void addSubject(String name) {
+
         try {
 
             if (!isExisted("Subject", "name", name)) {
@@ -189,6 +191,47 @@ public class DbConnection {
         }
 
     }
+
+    public void addDeck(String name){
+        try {
+
+            if (!isExisted("Deck", "name", name)) {
+                connect();
+                preparedStatement = connection.prepareStatement("insert into Deck value(?) ;");
+                preparedStatement.setString(1, name);
+            }else{
+
+            }
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
+            }
+        }
+    }
+
+
+
+    public void addCard(String text){
+        try {
+
+            if (!isExisted("Card", "text", text)) {
+                connect();
+                preparedStatement = connection.prepareStatement("insert into Card value(?) ;");
+                preparedStatement.setString(1, text);
+            }else{
+
+            }
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
+            }
+        }
+    }
+
 
 }
 
