@@ -141,17 +141,17 @@ public class DbConnection {
     public ArrayList<String> fetchSubjects(){
 
         ArrayList<String>subjects = new ArrayList<>();
-        String[]subjectsTest;
 
         try {
             connect();
             preparedStatement = connection.prepareStatement("SELECT name FROM Subject");
             resultSet = preparedStatement.executeQuery();
 
-            int i = 0;
+
 
             while (resultSet.next()){
-                subjects.add(resultSet.getString(i));
+                subjects.add(resultSet.getString("name"));
+
             }
 
 
