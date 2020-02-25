@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class SubjectsActivity extends AppCompatActivity {
 
     @Override
@@ -12,6 +14,6 @@ public class SubjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subjects);
 
         String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
-
+        ArrayList<String> courses;
     }
 }
