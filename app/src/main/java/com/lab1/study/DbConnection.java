@@ -146,10 +146,10 @@ public class DbConnection {
             preparedStatement = connection.prepareStatement("SELECT name FROM Subject");
             resultSet = preparedStatement.executeQuery();
 
-
             while (resultSet.next()) {
                 subjects.add(resultSet.getString("name"));
             }
+            Log.i("gg", "D!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2B" + subjects.get(0));
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 1203) {
