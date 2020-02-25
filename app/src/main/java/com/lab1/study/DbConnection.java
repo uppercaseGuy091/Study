@@ -44,7 +44,7 @@ public class DbConnection {
             }
 
         } catch (SQLException sqlEx) {
-            Log.i("SQLException","Close Exception");
+            Log.i("SQLException", "Close Exception");
         }
     }
 
@@ -133,6 +133,26 @@ public class DbConnection {
             cleanUp();
         }
         return false;
+    }
+
+    public void addCourse(String name) {
+        try {
+
+            if (!isExisted("Subject", "name", name)) {
+                connect();
+                preparedStatement = connection.prepareStatement("insert into Subject value(?) ;");
+                preparedStatement.setString(1, name);
+            }else{
+
+            }
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
+            }
+        }
+
     }
 
 }
