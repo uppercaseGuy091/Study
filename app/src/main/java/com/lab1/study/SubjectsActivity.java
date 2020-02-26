@@ -42,6 +42,7 @@ public class SubjectsActivity extends AppCompatActivity {
                                     Intent intent = new Intent(SubjectsActivity.this, DecksActivity.class);
                                     intent.putExtra("username", username);
                                     intent.putExtra("subject", txtView.getText());
+
                                     startActivity(intent);
                                 }
                             });
