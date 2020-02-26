@@ -1,14 +1,14 @@
 package com.lab1.study;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SubjectsActivity extends AppCompatActivity {
 
@@ -16,17 +16,42 @@ public class SubjectsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects);
-        TextView tx;
 
-        String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
-        ArrayList<String> courses = DbConnection.getInstance().fetchSubjects();
+        final String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
+
+        final LinearLayout coursesLayout = findViewById(R.id.SubjectListXmlListView);
 
 
-        ListView coursesListView = findViewById(R.id.SubjectListXmlListView);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final ArrayList<String> courses = DbConnection.getInstance().fetchSubjects();
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList(courses));
-        coursesListView.setAdapter(arrayAdapter);
+                SubjectsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (String sub : courses) {
+                            final TextView txtView = new TextView(SubjectsActivity.this);
+                            txtView.setTextSize(22);
+                            txtView.setHeight(150);
+                            txtView.setText(sub);
 
-        System.out.println(courses);
+                            txtView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(SubjectsActivity.this, DecksActivity.class);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("subject", txtView.getText());
+                                    startActivity(intent);
+                                }
+                            });
+                            coursesLayout.addView(txtView);
+                        }
+                    }
+                });
+            }
+        });
+
+        thread.start();
     }
 }
