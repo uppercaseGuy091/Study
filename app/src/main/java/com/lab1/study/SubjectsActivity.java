@@ -1,57 +1,52 @@
 package com.lab1.study;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SubjectsActivity extends AppCompatActivity {
-
+        TextView txtView = null;
+        LinearLayout r = new LinearLayout(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects);
 
-        final String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
-
-        final LinearLayout coursesLayout = findViewById(R.id.SubjectListXmlListView);
+        txtView = findViewById(R.id.txtView);
 
 
+        String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final ArrayList<String> courses = DbConnection.getInstance().fetchSubjects();
+                final ArrayList<String> subjects = DbConnection.getInstance().fetchSubjects();
 
                 SubjectsActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        for (String sub : courses) {
-                            final TextView txtView = new TextView(SubjectsActivity.this);
-                            txtView.setTextSize(22);
-                            txtView.setHeight(150);
-                            txtView.setText(sub);
-
-                            txtView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(SubjectsActivity.this, DecksActivity.class);
-                                    intent.putExtra("username", username);
-                                    intent.putExtra("subject", txtView.getText());
-                                    startActivity(intent);
-                                }
-                            });
-                            coursesLayout.addView(txtView);
-                        }
+                        for(String sub: subjects)
+                       txtView.setText(sub);
+                        TextView textView = new TextView(SubjectsActivity.this);
+                        r.addView(txtView);
+                        textView.setH
                     }
                 });
             }
         });
-
         thread.start();
+
+
+
+        //ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList(courses));
+        //coursesListView.setAdapter(arrayAdapter);
+
     }
 }

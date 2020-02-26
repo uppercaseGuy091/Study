@@ -78,6 +78,8 @@ public class DbConnection {
         return null;
     }
 
+
+
     public void addUser(String username, String password, String email) throws Exception {
         try {
             if (validateUsername(username) && validateEmail(email)) {
