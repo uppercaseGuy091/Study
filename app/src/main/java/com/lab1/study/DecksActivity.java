@@ -15,8 +15,8 @@ public class DecksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_decks);
 
 
-        String subjectName = "Data Communication";
-        title.setText( subjectName + "Decks");
+        //String subjectName = "Data Communication";
+        //title.setText( subjectName + "Decks");
 
 
 
