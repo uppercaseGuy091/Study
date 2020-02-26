@@ -213,6 +213,40 @@ public class DbConnection {
         }
     }
 
+    public ArrayList<String> getDecks(){
+        ArrayList<String>decks= new ArrayList<>();
+
+        try {
+            connect();
+            //preparedStatement = connection.prepareStatement("SELECT name FROM Subject");
+            //resultSet = preparedStatement.executeQuery();
+
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT name FROM Subject");
+
+            while (resultSet.next()) {
+                decks.add(resultSet.getString("name"));
+            }
+
+
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
+            }
+        } finally {
+            cleanUp();
+            System.out.println("finally");
+        }
+        return decks;
+
+
+    }
+
+
+
+
 
     public void addCard(String text) {
         try {
