@@ -223,7 +223,9 @@ public class DbConnection {
             //resultSet = preparedStatement.executeQuery();
 
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT name FROM Deck where subjectName =" + subjectName);
+            preparedStatement = connection.prepareStatement("SELECT name FROM Deck where subjectName = '" + subjectName + "'");
+
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 decks.add(resultSet.getString("name"));
