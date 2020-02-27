@@ -2,6 +2,7 @@ package com.lab1.study;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,12 +16,15 @@ public class DecksActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decks);
 
+        Intent intent = getIntent();
+        final String subjectName = intent.getStringExtra("username");
+
         TextView title = (TextView)(findViewById(R.id.title));
-        String subjectName = "Data Communication";
-        title.setText( subjectName + "Decks");
+        title.setText( subjectName + " Decks");
 
 
 
@@ -29,16 +33,16 @@ public class DecksActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final ArrayList<String> courses = DbConnection.getInstance().fetchSubjects();
+                final ArrayList<String> decks = DbConnection.getInstance().getDecks(subjectName);
 
                 DecksActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        for (String sub : courses) {
+                        for (String deck : decks) {
                             final TextView txtView = new TextView(DecksActivity.this);
                             txtView.setTextSize(22);
                             txtView.setHeight(150);
-                            txtView.setText(sub);
+                            txtView.setText(deck);
 
                             txtView.setOnClickListener(new View.OnClickListener() {
                                 @Override
