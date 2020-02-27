@@ -184,7 +184,7 @@ public class DbConnection {
             } else {
                 Log.i("SQLException", e.getErrorCode() + e.toString());
             }
-        }finally {
+        } finally {
             cleanUp();
         }
 
@@ -206,29 +206,27 @@ public class DbConnection {
             } else {
                 Log.i("SQLException", e.getErrorCode() + e.toString());
             }
-        }finally {
+        } finally {
             cleanUp();
         }
     }
 
-    public ArrayList<String> getDecks(String subjectName){
+    public ArrayList<Deck> getDecks(String subjectName) {
 
-        ArrayList<String>decks= new ArrayList<>();
+        ArrayList<Deck> decks = new ArrayList<>();
 
         try {
             connect();
-            //preparedStatement = connection.prepareStatement("SELECT name FROM Subject");
-            //resultSet = preparedStatement.executeQuery();
 
             statement = connection.createStatement();
-            preparedStatement = connection.prepareStatement("SELECT name FROM Deck where subjectName = '" + subjectName + "'");
+            preparedStatement = connection.prepareStatement("SELECT name, id FROM Deck where subjectName = '" + subjectName + "'");
 
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                decks.add(resultSet.getString("name"));
+                Deck deck = new Deck(resultSet.getInt("id"),resultSet.getString("name"));
+                decks.add(deck);
             }
-
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 1203) {
@@ -245,8 +243,27 @@ public class DbConnection {
 
     }
 
+    public ArrayList<Card> getCards(int deckId) {
 
+        ArrayList<Card> cards = new ArrayList<>();
 
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM Cards WHERE deckId = ?");
+            preparedStatement.setInt(1, deckId);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Card card = new Card(resultSet.getString("question"), "answer");
+                card.setId(resultSet.getInt("cardId"));
+                cards.add(card);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cards;
+    }
 
 
     public void addCard(String text) {
@@ -265,7 +282,7 @@ public class DbConnection {
             } else {
                 Log.i("SQLException", e.getErrorCode() + e.toString());
             }
-        }finally {
+        } finally {
             cleanUp();
         }
     }
