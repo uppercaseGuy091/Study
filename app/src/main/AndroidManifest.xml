@@ -12,12 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
-
-        <activity android:name=".CardsActivity"></activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".CardsActivity"></activity>
         <activity android:name=".SplashActivity">
-
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +25,6 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SubjectsActivity" />
         <activity android:name=".DecksActivity" />
-
-
-
 
     </application>
 
