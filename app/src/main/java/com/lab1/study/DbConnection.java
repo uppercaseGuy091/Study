@@ -167,7 +167,7 @@ public class DbConnection {
     }
 
 
-    public void addSubject(String name) {
+    public void addSubjectToDB(String name) {
 
         try {
 
@@ -175,6 +175,7 @@ public class DbConnection {
                 connect();
                 preparedStatement = connection.prepareStatement("insert into Subject value(?) ;");
                 preparedStatement.setString(1, name);
+                preparedStatement.executeUpdate();
             } else {
 
             }
