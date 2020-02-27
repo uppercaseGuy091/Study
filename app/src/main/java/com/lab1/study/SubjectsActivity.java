@@ -8,14 +8,21 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 public class SubjectsActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects);
+
+
+
 
         final String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
 
@@ -53,5 +60,8 @@ public class SubjectsActivity extends AppCompatActivity {
         });
 
         thread.start();
+
+
+
     }
 }
