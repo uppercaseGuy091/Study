@@ -21,11 +21,10 @@ public class DecksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_decks);
 
         Intent intent = getIntent();
-        final String subjectName = intent.getStringExtra("username");
+        final String subjectName = intent.getStringExtra("subject");
 
-        TextView title = (TextView)(findViewById(R.id.title));
-        title.setText( subjectName + " Decks");
-
+        TextView title = (TextView) (findViewById(R.id.title));
+        title.setText(subjectName + " Decks");
 
 
         final LinearLayout decksLayout = findViewById(R.id.ListLayout);
@@ -58,20 +57,6 @@ public class DecksActivity extends AppCompatActivity {
         });
 
         thread.start();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
