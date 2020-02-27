@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class DecksActivity extends AppCompatActivity {
 
-    TextView title;
+    //TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,9 @@ public class DecksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decks);
 
-        Intent intent = getIntent();
-        final String subjectName = intent.getStringExtra("subject");
+        Intent getIntent = getIntent();
+        final String subjectName = getIntent.getStringExtra("subject");
+        final String username = getIntent.getStringExtra("username");
 
         TextView title = (TextView) (findViewById(R.id.title));
         title.setText(subjectName + " Decks");
@@ -32,21 +33,24 @@ public class DecksActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final ArrayList<String> decks = DbConnection.getInstance().getDecks(subjectName);
+                final ArrayList<Deck> decks = DbConnection.getInstance().getDecks(subjectName);
 
                 DecksActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        for (String deck : decks) {
+                        for (final Deck deck : decks) {
                             final TextView txtView = new TextView(DecksActivity.this);
                             txtView.setTextSize(22);
                             txtView.setHeight(150);
-                            txtView.setText(deck);
+                            txtView.setText(deck.getName());
 
                             txtView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
+                                    Intent intent = new Intent(DecksActivity.this, CardsActivity.class);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("deckId", deck.getId());
+                                    startActivity(intent);
                                 }
                             });
                             decksLayout.addView(txtView);
