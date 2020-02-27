@@ -240,9 +240,8 @@ public class DbConnection {
             System.out.println("finally");
         }
         return decks;
-
-
     }
+
 
     public ArrayList<Card> getCards(int deckId) {
 
