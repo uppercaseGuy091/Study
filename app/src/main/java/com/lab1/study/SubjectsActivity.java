@@ -19,7 +19,7 @@ public class SubjectsActivity extends AppCompatActivity {
 
         final String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
 
-        final LinearLayout coursesLayout = findViewById(R.id.SubjectListXmlListView);
+        final LinearLayout coursesLayout = findViewById(R.id.ListLayout);
 
 
         Thread thread = new Thread(new Runnable() {

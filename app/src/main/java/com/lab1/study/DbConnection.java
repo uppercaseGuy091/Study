@@ -213,7 +213,8 @@ public class DbConnection {
         }
     }
 
-    public ArrayList<String> getDecks(){
+    public ArrayList<String> getDecks(String subjectName){
+
         ArrayList<String>decks= new ArrayList<>();
 
         try {
@@ -222,7 +223,7 @@ public class DbConnection {
             //resultSet = preparedStatement.executeQuery();
 
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT name FROM Subject");
+            resultSet = statement.executeQuery("SELECT name FROM Deck where subjectName =" + subjectName);
 
             while (resultSet.next()) {
                 decks.add(resultSet.getString("name"));
