@@ -6,11 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/addIcon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/ScrollView"
+        android:src="@drawable/ic_add_circle_black"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        />
+
 
     <ScrollView
         android:id="@+id/ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+
 
         <LinearLayout
             android:id="@+id/ListLayout"
