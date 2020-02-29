@@ -16,5 +16,11 @@
     <string name="showQues">Show question</string>
     <string name="showAnsw">Show answer</string>
     <string name="nextQues">Next question</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="password_dialog_message">Your Study Cards account\'s password will be sent to your e-mail</string>
+    <string name="password_sent">The password has been sent to your email</string>
+    <string name="no_email">There is no e-mail associated to:\u0020</string>
+
 
 </resources>

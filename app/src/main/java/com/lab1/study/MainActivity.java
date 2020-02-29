@@ -1,7 +1,10 @@
 package com.lab1.study;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -67,9 +70,82 @@ public class MainActivity extends AppCompatActivity {
         forgotPasswordTxtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialog();
             }
         });
+    }
+
+    private void showDialog() {
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        alert.setTitle(MainActivity.this.getResources().getText(R.string.forgot_password));
+        alert.setMessage(MainActivity.this.getResources().getText(R.string.password_dialog_message));
+
+        final EditText input = new EditText(alert.getContext());
+        input.requestFocus();
+        alert.setView(input);
+        alert.setPositiveButton(MainActivity.this.getResources().getText(R.string.ok), null);
+        alert.setNegativeButton(MainActivity.this.getResources().getText(R.string.cancel), null);
+
+        final AlertDialog dialog = alert.create();
+        dialog.show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final String email = input.getText().toString();
+                        final String password = DbConnection.getInstance().getPassword(email);
+
+                        if (password != null) {
+                            try {
+                                sendPassword(email, password);
+
+                            } catch (RuntimeException e) {
+
+                            }
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this,
+                                            MainActivity.this.getResources().getText(R.string.password_sent)
+                                            , Toast.LENGTH_LONG).show();
+                                    dialog.cancel();
+                                }
+                            });
+
+                        } else {
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    dialog.setMessage(MainActivity.this.getResources().getString(R.string.password_dialog_message) + "\n\n"
+                                            + MainActivity.this.getResources().getString(R.string.no_email) + email);
+                                }
+                            });
+                        }
+
+                    }
+                });
+                thread.start();
+            }
+        });
+
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    private void sendPassword(String email, String password) {
+        Mail mail = new Mail(email,
+                "Study Cards",
+                "Hi,\n\nYou have requested your account's password.\nPassword: " + password + "\n\nBest regards\nStudy Cards Team");
+        mail.send();
 
     }
 
@@ -124,11 +200,13 @@ public class MainActivity extends AppCompatActivity {
         String password = passwordTxtField.getText().toString();
         User user = new User(username, password);
         return user.logIn();
+
     }
 
     private void openSignUpActivity() {
         Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
         startActivityForResult(intent, 1);
+
     }
 
     @Override
