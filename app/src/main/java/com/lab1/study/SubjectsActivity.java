@@ -49,7 +49,6 @@ public class SubjectsActivity extends AppCompatActivity {
                                     Intent intent = new Intent(SubjectsActivity.this, DecksActivity.class);
                                     intent.putExtra("username", username);
                                     intent.putExtra("subject", txtView.getText());
-
                                     startActivity(intent);
                                 }
                             });
@@ -90,9 +89,8 @@ public class SubjectsActivity extends AppCompatActivity {
             final EditText input = new EditText(this);
             alert.setView(input);
 
-
-            // Make an "OK" button to save the name
-            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        // Make an "OK" button to save the name
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int whichButton) {
 
