@@ -61,10 +61,11 @@
                 android:id="@+id/forgotPasswordTxtView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="end"
                 android:text="@string/forgot_password"
                 android:textColor="@android:color/holo_blue_light"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
             <CheckBox
                 android:id="@+id/rememberMe"

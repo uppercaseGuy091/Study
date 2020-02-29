@@ -13,9 +13,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 
 public class SubjectsActivity extends AppCompatActivity {
@@ -92,6 +89,7 @@ public class SubjectsActivity extends AppCompatActivity {
             // Create EditText for entry
             final EditText input = new EditText(this);
             alert.setView(input);
+
 
             // Make an "OK" button to save the name
             alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {

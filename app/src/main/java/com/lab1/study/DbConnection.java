@@ -289,5 +289,33 @@ public class DbConnection {
         }
     }
 
+    public String getPassword(String email){
+        String password = null;
+            try {
+
+                connect();
+                preparedStatement = connection.prepareStatement("select password from User where email = ? ;");
+                preparedStatement.setString(1, email);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    password = resultSet.getString("password");
+
+                    return password;
+                }
+
+            } catch (SQLException e) {
+                if (e.getErrorCode() == 1203) {
+                    Log.i("SQLException", "There is a limited number of available connections");
+                } else {
+                    Log.i("SQLException", e.getErrorCode() + e.toString());
+                }
+            } finally {
+                cleanUp();
+            }
+
+            return password;
+    }
+
 
 }
