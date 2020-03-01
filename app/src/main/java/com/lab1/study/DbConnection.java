@@ -252,7 +252,7 @@ public class DbConnection {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Card card = new Card(resultSet.getString("question"), "answer");
+                Card card = new Card(resultSet.getString("question"), resultSet.getString("answer"));
                 card.setId(resultSet.getInt("cardId"));
                 cards.add(card);
             }
