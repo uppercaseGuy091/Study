@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 public class DecksActivity extends AppCompatActivity {
 
-    //TextView title;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,6 +48,7 @@ public class DecksActivity extends AppCompatActivity {
                                     Intent intent = new Intent(DecksActivity.this, CardsActivity.class);
                                     intent.putExtra("username", username);
                                     intent.putExtra("deckId", deck.getId());
+                                    intent.putExtra("subject", subjectName);
                                     startActivity(intent);
                                 }
                             });
