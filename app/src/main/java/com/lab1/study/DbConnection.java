@@ -79,7 +79,6 @@ public class DbConnection {
     }
 
 
-
     public void addUser(String username, String password, String email) throws Exception {
         try {
             if (validateUsername(username) && validateEmail(email)) {
@@ -145,8 +144,6 @@ public class DbConnection {
 
         try {
             connect();
-            //preparedStatement = connection.prepareStatement("SELECT name FROM Subject");
-            //resultSet = preparedStatement.executeQuery();
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT name FROM Subject");
@@ -227,7 +224,7 @@ public class DbConnection {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Deck deck = new Deck(resultSet.getInt("id"),resultSet.getString("name"));
+                Deck deck = new Deck(resultSet.getInt("id"), resultSet.getString("name"));
                 decks.add(deck);
             }
 
@@ -250,7 +247,7 @@ public class DbConnection {
         ArrayList<Card> cards = new ArrayList<>();
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM Cards WHERE deckId = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM Card WHERE deckId = ?");
             preparedStatement.setInt(1, deckId);
             resultSet = preparedStatement.executeQuery();
 
@@ -289,33 +286,32 @@ public class DbConnection {
         }
     }
 
-    public String getPassword(String email){
+    public String getPassword(String email) {
         String password = null;
-            try {
+        try {
 
-                connect();
-                preparedStatement = connection.prepareStatement("select password from User where email = ? ;");
-                preparedStatement.setString(1, email);
-                resultSet = preparedStatement.executeQuery();
+            connect();
+            preparedStatement = connection.prepareStatement("select password from User where email = ? ;");
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
 
-                if (resultSet.next()) {
-                    password = resultSet.getString("password");
+            if (resultSet.next()) {
+                password = resultSet.getString("password");
 
-                    return password;
-                }
-
-            } catch (SQLException e) {
-                if (e.getErrorCode() == 1203) {
-                    Log.i("SQLException", "There is a limited number of available connections");
-                } else {
-                    Log.i("SQLException", e.getErrorCode() + e.toString());
-                }
-            } finally {
-                cleanUp();
+                return password;
             }
 
-            return password;
-    }
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
+            }
+        } finally {
+            cleanUp();
+        }
 
+        return password;
+    }
 
 }

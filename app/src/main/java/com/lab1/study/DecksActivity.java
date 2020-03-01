@@ -62,6 +62,5 @@ public class DecksActivity extends AppCompatActivity {
 
         thread.start();
 
-
     }
 }

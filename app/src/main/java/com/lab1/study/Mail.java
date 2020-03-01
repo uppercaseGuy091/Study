@@ -18,9 +18,9 @@ public class Mail {
     private final String MY_EMAIL = "studycards05@gmail.com";
     private final String MY_PASSWORD = "studycards05@5";
 
-        private String toEmail;
-        private String emailSubject;
-        private String emailText;
+    private String toEmail;
+    private String emailSubject;
+    private String emailText;
 
     public Mail(String toEmail, String emailSubject, String emailText) {
         this.toEmail = toEmail;
@@ -28,7 +28,7 @@ public class Mail {
         this.emailText = emailText;
     }
 
-     public void send() throws RuntimeException{
+    public void send() throws RuntimeException {
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
@@ -55,15 +55,9 @@ public class Mail {
 
         } catch (MessagingException e) {
             System.out.println(e.toString());
-            Log.i("Mail Exception",e.toString());
+            Log.i("Mail Exception", e.toString());
             throw new RuntimeException(e);
 
         }
     }
-
-
 }
-
-
-
-
