@@ -23,8 +23,7 @@ public class SubjectsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects);
 
-
-        final String username = this.getIntent().getExtras().getString("username");// To be sent to next activity
+        final String username = this.getIntent().getExtras().getString("username"); // To be sent to next activity
 
         final LinearLayout coursesLayout = findViewById(R.id.ListLayout);
 
@@ -64,52 +63,48 @@ public class SubjectsActivity extends AppCompatActivity {
 
         ImageView addIcon = (ImageView) findViewById(R.id.addIcon);
         addIcon.setOnClickListener(new View.OnClickListener() {
-           @Override
-             public void onClick(View v) {
-                 addSubject();
-          }
-         });
+            @Override
+            public void onClick(View v) {
+                addSubject();
+            }
+        });
 
     }
 
 
+    public void addSubject() {
+        Toast.makeText(getApplicationContext(), "Button clicked", Toast.LENGTH_SHORT).show();
 
+        // otherwise, show a dialog to ask for their name
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Add Subject!");
+        alert.setMessage("Enter the name of the Subject");
 
-        public void addSubject(){
-            Toast.makeText(getApplicationContext(),
-                    "Button clicked",
-                    Toast.LENGTH_SHORT).show();
-
-            // otherwise, show a dialog to ask for their name
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Add Subject!");
-            alert.setMessage("Enter the name of the Subject?");
-
-            // Create EditText for entry
-            final EditText input = new EditText(this);
-            alert.setView(input);
+        // Create EditText for entry
+        final EditText input = new EditText(this);
+        alert.setView(input);
 
         // Make an "OK" button to save the name
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog, int whichButton) {
+            public void onClick(DialogInterface dialog, int whichButton) {
 
-                    // Grab the EditText's input
-                    final String inputName = input.getText().toString();
+                // Grab the EditText's input
+                final String inputName = input.getText().toString();
 
-                    // Put it into memory (don't forget to commit!)
-                    //SharedPreferences.Editor e = mSharedPreferences.edit();
-                    //e.putString(PREF_NAME, inputName);
-                    //e.commit();
+                //Put it into memory (don't forget to commit!)
+                //SharedPreferences.Editor e = mSharedPreferences.edit();
+                //e.putString(PREF_NAME, inputName);
+                //e.commit();
 
-                    Thread thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                DbConnection.getInstance().addSubjectToDB(inputName);
-                                finish();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            DbConnection.getInstance().addSubjectToDB(inputName);
+                            finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                            /* final String exceptionMessage = e.getMessage();
                             SubjectsActivity.this.runOnUiThread(new Runnable() {
                                 @Override
@@ -126,36 +121,25 @@ public class SubjectsActivity extends AppCompatActivity {
                                 }
                             });*/
 
-                            }
                         }
-                    });
-                    thread.start();
+                    }
+                });
+                thread.start();
 
 
+                // Welcome the new user
+                Toast.makeText(getApplicationContext(), "You added the subject, " + inputName + "!", Toast.LENGTH_LONG).show();
+            }
+        });
 
+        // Make a "Cancel" button that simply dismisses the alert
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
 
-
-
-                    // Welcome the new user
-                    Toast.makeText(getApplicationContext(), "You added the subject, " + inputName + "!", Toast.LENGTH_LONG).show();
-                }
-            });
-
-            // Make a "Cancel" button
-            // that simply dismisses the alert
-            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                public void onClick(DialogInterface dialog, int whichButton) {}
-            });
-
-            alert.show();
-        }
-
-
-
-
-
-
+        alert.show();
     }
 
+}
