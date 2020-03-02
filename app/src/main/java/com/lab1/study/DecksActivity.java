@@ -49,6 +49,7 @@ public class DecksActivity extends AppCompatActivity {
                                     intent.putExtra("username", username);
                                     intent.putExtra("deckId", deck.getId());
                                     intent.putExtra("subject", subjectName);
+                                    intent.putExtra("deckName", deck.getName());
                                     startActivity(intent);
                                 }
                             });

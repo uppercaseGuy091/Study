@@ -22,18 +22,19 @@ public class ResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_results);
 
         Intent getIntent = getIntent();
-        int deckId = getIntent.getIntExtra("deckId", 0);
         final String username = getIntent.getStringExtra("username");
         final String subject = getIntent.getStringExtra("subject");
         final int wrongAns = getIntent.getIntExtra("wrongAns", 0);
         final int rightAns = getIntent.getIntExtra("correctAns", 0);
+        final String deckName = getIntent.getStringExtra("deckName");
+
 
         resultsTv = findViewById(R.id.results);
         rightTv = findViewById(R.id.right);
         wrongTv = findViewById(R.id.wrong);
         startOverBtn = findViewById(R.id.startAgain);
 
-        resultsTv.setText("Here are the results for user " + username + "\nfor the subject of " + subject + "\ndeck " + deckId);
+        resultsTv.setText("Here are the results for user " + username + "\nfor the subject of " + subject + "\nand deck " + deckName);
         rightTv.setText("You knew " + rightAns + " of the questions, good job!");
         wrongTv.setText("You need to work on " + wrongAns + " of the questions.");
 

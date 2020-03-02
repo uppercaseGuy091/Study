@@ -36,6 +36,7 @@ public class CardsActivity extends AppCompatActivity {
         final int deckId = getIntent.getIntExtra("deckId", 0);
         final String username = getIntent.getStringExtra("username");
         final String subject = getIntent.getStringExtra("subject");
+        final String deckName = getIntent.getStringExtra("deckName");
 
         changeTextViewBtn.setText("Show answer");
 
@@ -73,6 +74,16 @@ public class CardsActivity extends AppCompatActivity {
                                 if (count != cards.size()) {
                                     quesOrAnsTv.setText(cards.get(count).getQuestion());
                                 }
+                                if (count == cards.size()) {
+                                    Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
+                                    passValues.putExtra("username", username);
+                                    passValues.putExtra("subject", subject);
+                                    passValues.putExtra("deckId", deckId);
+                                    passValues.putExtra("correctAns", rightAns);
+                                    passValues.putExtra("wrongAns", wrongAns);
+                                    passValues.putExtra("deckName", deckName);
+                                    startActivity(passValues);
+                                }
                             }
                         });
 
@@ -91,6 +102,7 @@ public class CardsActivity extends AppCompatActivity {
                                     passValues.putExtra("deckId", deckId);
                                     passValues.putExtra("correctAns", rightAns);
                                     passValues.putExtra("wrongAns", wrongAns);
+                                    passValues.putExtra("deckName", deckName);
                                     startActivity(passValues);
                                 }
                             }
@@ -112,6 +124,7 @@ public class CardsActivity extends AppCompatActivity {
                                     passValues.putExtra("deckId", deckId);
                                     passValues.putExtra("correctAns", rightAns);
                                     passValues.putExtra("wrongAns", wrongAns);
+                                    passValues.putExtra("deckName", deckName);
                                     startActivity(passValues);
                                     finish();
                                 }

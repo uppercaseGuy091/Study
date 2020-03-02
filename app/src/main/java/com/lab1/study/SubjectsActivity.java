@@ -24,6 +24,7 @@ public class SubjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subjects);
 
         final String username = this.getIntent().getExtras().getString("username"); // To be sent to next activity
+        final String deckName = this.getIntent().getExtras().getString("deckName");
 
         final LinearLayout coursesLayout = findViewById(R.id.ListLayout);
 
@@ -48,6 +49,7 @@ public class SubjectsActivity extends AppCompatActivity {
                                     Intent intent = new Intent(SubjectsActivity.this, DecksActivity.class);
                                     intent.putExtra("username", username);
                                     intent.putExtra("subject", txtView.getText());
+                                    intent.putExtra("deckName", deckName);
                                     startActivity(intent);
                                 }
                             });
