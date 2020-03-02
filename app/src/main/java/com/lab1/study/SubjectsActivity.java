@@ -75,7 +75,7 @@ public class SubjectsActivity extends AppCompatActivity {
     public void addSubject() {
         Toast.makeText(getApplicationContext(), "Button clicked", Toast.LENGTH_SHORT).show();
 
-        // otherwise, show a dialog to ask for their name
+        //show a dialog to ask for subject name
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Add Subject!");
         alert.setMessage("Enter the name of the Subject");
@@ -89,10 +89,8 @@ public class SubjectsActivity extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                // Grab the EditText's input
                 final String inputName = input.getText().toString();
 
-                //Put it into memory (don't forget to commit!)
                 //SharedPreferences.Editor e = mSharedPreferences.edit();
                 //e.putString(PREF_NAME, inputName);
                 //e.commit();
@@ -126,8 +124,6 @@ public class SubjectsActivity extends AppCompatActivity {
                 });
                 thread.start();
 
-
-                // Welcome the new user
                 Toast.makeText(getApplicationContext(), "You added the subject, " + inputName + "!", Toast.LENGTH_LONG).show();
             }
         });

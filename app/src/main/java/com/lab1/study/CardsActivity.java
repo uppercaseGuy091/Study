@@ -12,10 +12,6 @@ import java.util.ArrayList;
 
 public class CardsActivity extends AppCompatActivity {
 
-
-    //THIS CLASS IS NOT COMPLETE, I JUST UPLOADED IT FOR ANYONE TO SEE/WORK ON
-
-
     TextView quesOrAnsTv;
     Button changeTextViewBtn;
     Button skipQuestionBtn;
@@ -47,10 +43,12 @@ public class CardsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final ArrayList<Card> cards = DbConnection.getInstance().getCards(deckId);
+                final ArrayList<Card> skippedCards = new ArrayList<>();
 
                 CardsActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                         quesOrAnsTv.setText(cards.get(count).getQuestion());
 
                         changeTextViewBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,57 +69,67 @@ public class CardsActivity extends AppCompatActivity {
                         skipQuestionBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if ((count + 1) != cards.size()) {
-                                    count++;
+                                count++;
+                                if (count != cards.size()) {
                                     quesOrAnsTv.setText(cards.get(count).getQuestion());
-                                } else
-                                    return;
+                                }
                             }
                         });
 
                         yesBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if ((count + 1) != cards.size()) {
-                                    rightAns++;
-                                    count++;
+                                count++;
+                                rightAns++;
+                                if (count != cards.size()) {
                                     quesOrAnsTv.setText(cards.get(count).getQuestion());
-                                } else
-                                    return;
+                                }
+                                if (count == cards.size()) {
+                                    Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
+                                    passValues.putExtra("username", username);
+                                    passValues.putExtra("subject", subject);
+                                    passValues.putExtra("deckId", deckId);
+                                    passValues.putExtra("correctAns", rightAns);
+                                    passValues.putExtra("wrongAns", wrongAns);
+                                    startActivity(passValues);
+                                }
                             }
                         });
 
                         noBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if ((count + 1) != cards.size()) {
-                                    wrongAns++;
-                                    count++;
+                                count++;
+                                wrongAns++;
+                                if (count != cards.size()) {
                                     quesOrAnsTv.setText(cards.get(count).getQuestion());
-                                } else
-                                    return;
+                                }
+
+                                if (count == cards.size()) {
+                                    Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
+                                    passValues.putExtra("username", username);
+                                    passValues.putExtra("subject", subject);
+                                    passValues.putExtra("deckId", deckId);
+                                    passValues.putExtra("correctAns", rightAns);
+                                    passValues.putExtra("wrongAns", wrongAns);
+                                    startActivity(passValues);
+                                    finish();
+                                }
                             }
                         });
 
-                        //opens next activity, will uncomment when ResultsActivity is done
-                        /*
-                        Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
-                        passValues.putExtra("username", username);
-                        passValues.putExtra("subject", subject);
-                        passValues.putExtra("deckId", deckId);
-                        passValues.putExtra("correctAns", rightAns);
-                        passValues.putExtra("wrongAns", wrongAns);
-                        startActivity(passValues);
-                        */
-
                     }
-                });
-            }
 
+                });
+
+
+            }
 
         });
 
         thread.start();
 
     }
+
 }
+
