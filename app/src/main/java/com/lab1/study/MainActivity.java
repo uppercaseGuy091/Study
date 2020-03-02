@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     private void sendPassword(String email, String password) {
         Mail mail = new Mail(email,
                 "Study Cards",
-                "Hi,\n\nYou have requested your account's password.\nPassword: " + password + "\n\nBest regards\nStudy Cards Team");
+                "Hi,\n\nYou have requested your account's password.\nPassword: " + password + "\n\nBest regards,\nStudy Cards Team");
         mail.send();
 
     }
