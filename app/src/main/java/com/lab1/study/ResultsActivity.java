@@ -15,18 +15,18 @@ public class ResultsActivity extends AppCompatActivity {
     TextView wrongTv;
     Button startOverBtn;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
         Intent getIntent = getIntent();
-        final int deckId = getIntent.getIntExtra("deckId", 0);
+        int deckId = getIntent.getIntExtra("deckId", 0);
         final String username = getIntent.getStringExtra("username");
         final String subject = getIntent.getStringExtra("subject");
         final int wrongAns = getIntent.getIntExtra("wrongAns", 0);
         final int rightAns = getIntent.getIntExtra("correctAns", 0);
-
 
         resultsTv = findViewById(R.id.results);
         rightTv = findViewById(R.id.right);
@@ -38,26 +38,32 @@ public class ResultsActivity extends AppCompatActivity {
         wrongTv.setText("You need to work on " + wrongAns + " of the questions.");
 
 
-        /*
-        //this crashes for some reason
         startOverBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ResultsActivity.this, SubjectsActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
-        });*/
+        });
+
     }
 
-    //this is supposed to restart the previous activity entirely
-    //so it doesn't give indexOutOfBounds anc crash
-    //but it doesn't work as it should
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(ResultsActivity.this, CardsActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Intent getIntent = getIntent();
+        int deckId = getIntent.getIntExtra("deckId", 0);
+        final String username = getIntent.getStringExtra("username");
+        final String subject = getIntent.getStringExtra("subject");
+
+        intent.putExtra("username", username);
+        intent.putExtra("deckId", deckId);
+        intent.putExtra("subject", subject);
         startActivity(intent);
     }
+
 }
