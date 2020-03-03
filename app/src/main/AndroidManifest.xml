@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facabook_app_id"></meta-data>
+
         <activity android:name=".ResultsActivity"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".CardsActivity" />
@@ -24,6 +28,11 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SubjectsActivity" />
         <activity android:name=".DecksActivity" />
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider759487294457878"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

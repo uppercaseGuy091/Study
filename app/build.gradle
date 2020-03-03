@@ -31,5 +31,8 @@ dependencies {
     implementation files('libs\\activation.jar')
     implementation files('libs\\additionnal.jar')
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.facebook.android:facebook-share:[5,6)'
+
+    implementation 'androidx.cardview:cardview:1.0.0'
 
 }

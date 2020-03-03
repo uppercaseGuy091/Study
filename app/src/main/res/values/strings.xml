@@ -12,6 +12,7 @@
     <string name="sign_up">Sign up</string>
     <string name="invalid_username">This username is already taken</string>
     <string name="invalid_email">This email is already assigned to another user</string>
+    <string name="account_created">The account has been successfully created</string>
     <string name="subjectActivityTitle">Subjects</string>
     <string name="showQues">Show question</string>
     <string name="showAnsw">Show answer</string>
@@ -21,6 +22,11 @@
     <string name="password_dialog_message">Your Study Cards account\'s password will be sent to your e-mail</string>
     <string name="password_sent">The password has been sent to your email</string>
     <string name="no_email">There is no e-mail associated to:\u0020</string>
+    <string name="share_facebook">Share on Facebook</string>
+
+
+    <string name="facabook_app_id">759487294457878</string>
+
 
 
 </resources>

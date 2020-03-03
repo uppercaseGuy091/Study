@@ -176,12 +176,13 @@ public class MainActivity extends AppCompatActivity {
                                 FileUtils.writeToFile("Remember me.txt", verifiedUser.getUsername()
                                                 + "\r\n" + verifiedUser.getPassword(),
                                         MainActivity.this);
-                                Intent intent = new Intent(MainActivity.this, SubjectsActivity.class);
-                                intent.putExtra("username", verifiedUser.getUsername());
-                                startActivity(intent);
+
                             } else {
                                 FileUtils.writeToFile("Remember me.txt", "", MainActivity.this);
                             }
+                            Intent intent = new Intent(MainActivity.this, SubjectsActivity.class);
+                            intent.putExtra("username", verifiedUser.getUsername());
+                            startActivity(intent);
                         } else {
                             scrollView.scrollTo(0, 0);
                             invalidTxtView.setText(R.string.invalid_login);
@@ -216,7 +217,9 @@ public class MainActivity extends AppCompatActivity {
             if ((resultCode == RESULT_OK) && (data != null)) {
                 String username = data.getExtras().getString("username");
                 String password = data.getExtras().getString("password");
-                Toast.makeText(getApplicationContext(), "The account has been successfully created", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),
+                        MainActivity.this.getResources().getText(R.string.account_created),
+                        Toast.LENGTH_LONG).show();
                 usernameTxtField.setText(username);
                 passwordTxtField.setText(password);
             }
