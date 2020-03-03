@@ -214,6 +214,29 @@ public class DbConnection {
         }
     }
 
+
+    public void addCardToDB(String question, String answer, int deckId) {
+        try {
+
+            connect();
+            preparedStatement = connection.prepareStatement("insert into Card (question, answer, deckId) values(?, ?, ?) ;");
+            preparedStatement.setString(1, question);
+            preparedStatement.setString(2, answer);
+            preparedStatement.setInt(3, deckId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1203) {
+                Log.i("SQLException", "There is a limited number of available connections");
+            } else {
+                Log.i("SQLException", e.getErrorCode() + e.toString());
+            }
+        } finally {
+            cleanUp();
+        }
+    }
+
+
     public ArrayList<Deck> getDecks(String subjectName) {
 
         ArrayList<Deck> decks = new ArrayList<>();
@@ -268,27 +291,6 @@ public class DbConnection {
     }
 
 
-    public void addCardTODB(String text) {
-        try {
-
-            if (!isExisted("Card", "text", text)) {
-                connect();
-                preparedStatement = connection.prepareStatement("insert into Card value(?) ;");
-                preparedStatement.setString(1, text);
-                preparedStatement.executeUpdate();
-            } else {
-
-            }
-        } catch (SQLException e) {
-            if (e.getErrorCode() == 1203) {
-                Log.i("SQLException", "There is a limited number of available connections");
-            } else {
-                Log.i("SQLException", e.getErrorCode() + e.toString());
-            }
-        } finally {
-            cleanUp();
-        }
-    }
 
     public String getPassword(String email) {
         String password = null;
