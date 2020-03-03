@@ -15,7 +15,7 @@
     <string name="subjectActivityTitle">Subjects</string>
     <string name="showQues">Show question</string>
     <string name="showAnsw">Show answer</string>
-    <string name="nextQues">Skip question</string>
+    <string name="nextQues">Skip</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="password_dialog_message">Your Study Cards account\'s password will be sent to your e-mail</string>
