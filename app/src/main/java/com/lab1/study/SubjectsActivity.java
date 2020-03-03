@@ -3,6 +3,7 @@ package com.lab1.study;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -75,11 +76,9 @@ public class SubjectsActivity extends AppCompatActivity {
 
 
     public void addSubject() {
-        Toast.makeText(getApplicationContext(), "Button clicked", Toast.LENGTH_SHORT).show();
-
         //show a dialog to ask for subject name
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Add Subject!");
+        alert.setTitle("Add Subject");
         alert.setMessage("Enter the name of the Subject");
 
         // Create EditText for entry
