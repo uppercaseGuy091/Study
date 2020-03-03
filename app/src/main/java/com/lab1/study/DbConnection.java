@@ -190,13 +190,16 @@ public class DbConnection {
 
     }
 
-    public void addDeck(String name) {
+    public void addDeckToDB(String name, String subjectName) {
         try {
 
             if (!isExisted("Deck", "name", name)) {
                 connect();
-                preparedStatement = connection.prepareStatement("insert into Deck value(?) ;");
+                preparedStatement = connection.prepareStatement("insert into Deck (name, subjectName) values(?, ?) ;");
                 preparedStatement.setString(1, name);
+                preparedStatement.setString(2, subjectName);
+                preparedStatement.executeUpdate();
+
             } else {
 
             }
@@ -265,13 +268,14 @@ public class DbConnection {
     }
 
 
-    public void addCard(String text) {
+    public void addCardTODB(String text) {
         try {
 
             if (!isExisted("Card", "text", text)) {
                 connect();
                 preparedStatement = connection.prepareStatement("insert into Card value(?) ;");
                 preparedStatement.setString(1, text);
+                preparedStatement.executeUpdate();
             } else {
 
             }
