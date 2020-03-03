@@ -20,6 +20,7 @@ public class CardsActivity extends AppCompatActivity {
     int count = 0;
     int rightAns = 0;
     int wrongAns = 0;
+    int skippedCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,6 @@ public class CardsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final ArrayList<Card> cards = DbConnection.getInstance().getCards(deckId);
-                final ArrayList<Card> skippedCards = new ArrayList<>();
 
                 CardsActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -70,11 +70,17 @@ public class CardsActivity extends AppCompatActivity {
                         skipQuestionBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                skippedCount++;
+
                                 count++;
+                                //sets the question to the textview
                                 if (count != cards.size()) {
                                     quesOrAnsTv.setText(cards.get(count).getQuestion());
                                     changeTextViewBtn.setText("Show answer");
                                 }
+
+
+                                //opens results activity after all the questions have passed
                                 if (count == cards.size()) {
                                     Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
                                     passValues.putExtra("username", username);
@@ -83,6 +89,7 @@ public class CardsActivity extends AppCompatActivity {
                                     passValues.putExtra("correctAns", rightAns);
                                     passValues.putExtra("wrongAns", wrongAns);
                                     passValues.putExtra("deckName", deckName);
+                                    passValues.putExtra("skippedCount", skippedCount);
                                     startActivity(passValues);
                                 }
                             }
@@ -104,6 +111,7 @@ public class CardsActivity extends AppCompatActivity {
                                     passValues.putExtra("correctAns", rightAns);
                                     passValues.putExtra("wrongAns", wrongAns);
                                     passValues.putExtra("deckName", deckName);
+                                    passValues.putExtra("skippedCount", skippedCount);
                                     startActivity(passValues);
                                 }
                             }
@@ -126,6 +134,7 @@ public class CardsActivity extends AppCompatActivity {
                                     passValues.putExtra("correctAns", rightAns);
                                     passValues.putExtra("wrongAns", wrongAns);
                                     passValues.putExtra("deckName", deckName);
+                                    passValues.putExtra("skippedCount", skippedCount);
                                     startActivity(passValues);
                                     finish();
                                 }

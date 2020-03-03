@@ -13,6 +13,7 @@ public class ResultsActivity extends AppCompatActivity {
     TextView resultsTv;
     TextView rightTv;
     TextView wrongTv;
+    TextView skipped;
     Button startOverBtn;
     Button fbShare;
 
@@ -28,6 +29,7 @@ public class ResultsActivity extends AppCompatActivity {
         final int wrongAns = getIntent.getIntExtra("wrongAns", 0);
         final int rightAns = getIntent.getIntExtra("correctAns", 0);
         final String deckName = getIntent.getStringExtra("deckName");
+        final int skippedCount = getIntent.getIntExtra("skippedCount",0);
 
 
         resultsTv = findViewById(R.id.results);
@@ -35,10 +37,12 @@ public class ResultsActivity extends AppCompatActivity {
         wrongTv = findViewById(R.id.wrong);
         startOverBtn = findViewById(R.id.startAgain);
         fbShare = findViewById(R.id.fb);
+        skipped = findViewById(R.id.skipped);
 
         resultsTv.setText("Here are the results for user " + username + "\nfor the subject of " + subject + "\nand deck " + deckName);
         rightTv.setText("You knew " + rightAns + " of the questions, good job!");
         wrongTv.setText("You need to work on " + wrongAns + " of the questions.");
+        skipped.setText("You skipped " + skippedCount + " of the questions.");
 
 
         startOverBtn.setOnClickListener(new View.OnClickListener() {
