@@ -73,6 +73,7 @@ public class CardsActivity extends AppCompatActivity {
                                 count++;
                                 if (count != cards.size()) {
                                     quesOrAnsTv.setText(cards.get(count).getQuestion());
+                                    changeTextViewBtn.setText("Show answer");
                                 }
                                 if (count == cards.size()) {
                                     Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
