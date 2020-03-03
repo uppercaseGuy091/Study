@@ -1,19 +1,25 @@
 package com.lab1.study;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class CardsActivity extends AppCompatActivity {
 
-    TextView quesOrAnsTv;
-    Button changeTextViewBtn;
+    TextView questionTv;
+    TextView answerTv;
+    private CardView answerLayout1;
+    private CardView questionLayout1;
+    Button animateBtn;
     Button skipQuestionBtn;
     Button yesBtn;
     Button noBtn;
@@ -21,14 +27,19 @@ public class CardsActivity extends AppCompatActivity {
     int rightAns = 0;
     int wrongAns = 0;
     int skippedCount = 0;
+    private int height; //To get height of the card so it can flip over it
+    int open = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards);
 
-        quesOrAnsTv = findViewById(R.id.questOrAns);
-        changeTextViewBtn = findViewById(R.id.cardsBtn);
+        answerLayout1 = findViewById(R.id.AnswerCard);
+        questionLayout1 = findViewById(R.id.QuestionCard);
+        questionTv = findViewById(R.id.questionTextViw);
+        answerTv = findViewById(R.id.answerTextView);
+        animateBtn = findViewById(R.id.cardsBtn);
         skipQuestionBtn = findViewById(R.id.skipQues);
         yesBtn = findViewById(R.id.yes);
         noBtn = findViewById(R.id.no);
@@ -39,7 +50,16 @@ public class CardsActivity extends AppCompatActivity {
         final String subject = getIntent.getStringExtra("subject");
         final String deckName = getIntent.getStringExtra("deckName");
 
-        changeTextViewBtn.setText("Show answer");
+        animateBtn.setText("Show answer");
+
+        questionLayout1.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                //Fetch height
+                height = ((questionLayout1.getHeight()) / 2) + 10; //divide it by two so it wont go too much on both sided(up and down)
+
+            }
+        });
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -50,20 +70,60 @@ public class CardsActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        quesOrAnsTv.setText(cards.get(count).getQuestion());
+                        questionTv.setText(cards.get(count).getQuestion());
 
-                        changeTextViewBtn.setOnClickListener(new View.OnClickListener() {
+                        answerTv.setText(cards.get(count).getAnswer());
+
+                        animateBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (quesOrAnsTv.getText().equals(cards.get(count).getQuestion()))
-                                    quesOrAnsTv.setText(cards.get(count).getAnswer());
-                                else
-                                    quesOrAnsTv.setText(cards.get(count).getQuestion());
 
-                                if (changeTextViewBtn.getText().equals("Show answer"))
-                                    changeTextViewBtn.setText("Hide answer");
-                                else
-                                    changeTextViewBtn.setText("Show answer");
+
+                                Toast.makeText(CardsActivity.this, "Flip!", Toast.LENGTH_SHORT).show();
+                                questionLayout1.animate().translationY(height).start();
+                                answerLayout1.animate().translationY(-1 * height).withEndAction(new Runnable() {  //withEndAction gets called once the animation is completed
+                                    @Override
+                                    public void run() {
+                                    /*
+                                    //flipping cards (one visible at a time)
+
+                                        if (open == 1) {
+                                            //Toast.makeText(MainActivity.this, "answer", Toast.LENGTH_SHORT).show();
+                                            questionLayout1.animate().translationY(0).start();
+                                            answerLayout1.animate().translationY(0);
+                                            questionLayout1.setVisibility(View.INVISIBLE);
+                                            open = 0;
+                                        } else if (open == 0) {
+                                            questionLayout1.animate().translationY(0).start();
+                                            answerLayout1.animate().translationY(0);
+                                            questionLayout1.setVisibility(View.VISIBLE);
+                                            open = 1;
+                                        }
+                                    }
+                                }).start();
+                                */
+
+                                        //expanding cards (both visible)
+                                        if (open == 1) {
+                                            //Toast.makeText(CardsActivity.this, "OPEN!", Toast.LENGTH_SHORT).show();
+                                            questionLayout1.animate().translationY(height).start();
+                                            answerLayout1.animate().translationY(-1 * height).start();
+                                            open = 0;
+                                        } else {
+                                            //Toast.makeText(CardsActivity.this, "CLOSE!", Toast.LENGTH_SHORT).show();
+                                            questionLayout1.animate().translationY(0).start();
+                                            answerLayout1.animate().translationY(0).start();
+                                            open = 1;
+
+                                        }
+
+
+                                        if (animateBtn.getText().equals("Show answer"))
+                                            animateBtn.setText("Hide answer");
+                                        else
+                                            animateBtn.setText("Show answer");
+                                    }
+                                });
                             }
                         });
 
@@ -75,8 +135,9 @@ public class CardsActivity extends AppCompatActivity {
                                 count++;
                                 //sets the question to the textview
                                 if (count != cards.size()) {
-                                    quesOrAnsTv.setText(cards.get(count).getQuestion());
-                                    changeTextViewBtn.setText("Show answer");
+                                    questionTv.setText(cards.get(count).getQuestion());
+                                    answerTv.setText(cards.get(count).getAnswer());
+                                    animateBtn.setText("Show answer");
                                 }
 
 
@@ -101,7 +162,8 @@ public class CardsActivity extends AppCompatActivity {
                                 count++;
                                 rightAns++;
                                 if (count != cards.size()) {
-                                    quesOrAnsTv.setText(cards.get(count).getQuestion());
+                                    questionTv.setText(cards.get(count).getQuestion());
+                                    answerTv.setText(cards.get(count).getAnswer());
                                 }
                                 if (count == cards.size()) {
                                     Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
@@ -123,7 +185,8 @@ public class CardsActivity extends AppCompatActivity {
                                 count++;
                                 wrongAns++;
                                 if (count != cards.size()) {
-                                    quesOrAnsTv.setText(cards.get(count).getQuestion());
+                                    questionTv.setText(cards.get(count).getQuestion());
+                                    answerTv.setText(cards.get(count).getAnswer());
                                 }
 
                                 if (count == cards.size()) {
