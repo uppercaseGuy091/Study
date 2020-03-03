@@ -125,7 +125,7 @@ public class SubjectsActivity extends AppCompatActivity {
                 });
                 thread.start();
 
-                Toast.makeText(getApplicationContext(), "You added the subject, " + inputName + "!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You added the subject, " + inputName, Toast.LENGTH_LONG).show();
             }
         });
 
