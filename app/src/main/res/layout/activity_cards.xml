@@ -8,78 +8,102 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/QuestionCard"
-        android:layout_width="370dp"
-        android:layout_height="231dp"
+        android:id="@+id/AnswerCard"
+        android:layout_width="277dp"
+        android:layout_height="200dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="212dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="330dp"
         app:cardBackgroundColor="#FFE261"
-        app:cardElevation="15dp">
 
+        app:cardElevation="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/questOrAns"
+                android:id="@+id/answerTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                />
+                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="370dp"
-        android:layout_height="231dp"
+        android:id="@+id/QuestionCard"
+        android:layout_width="276dp"
+        android:layout_height="201dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        app:cardBackgroundColor="#FFE261"
-        app:cardElevation="15dp">
-
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="212dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="330dp"
+        app:cardBackgroundColor="#FAE68D"
+        app:cardElevation="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/questOrAns2"
+                android:id="@+id/questionTextViw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                />
+                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
         </RelativeLayout>
+
+
     </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/no"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="321dp"
+        android:layout_marginTop="679dp"
+        android:layout_marginEnd="23dp"
+        android:text="No" />
+
+    <Button
+        android:id="@+id/cardsBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="190dp"
-        android:layout_marginTop="651dp"
-        android:layout_marginEnd="141dp"
-        android:layout_marginBottom="42dp"
-        android:text="No" />
-
-    <Button
-        android:id="@+id/skipQues"
-        android:layout_width="107dp"
-        android:layout_height="53dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="239dp"
-        android:layout_marginTop="479dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="199dp"
-        android:text="@string/nextQues"
-
-
-        />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="583dp"
+        android:layout_marginEnd="238dp" />
 
     <TextView
         android:id="@+id/title"
@@ -99,18 +123,18 @@
         app:layout_constraintVertical_bias="0.006" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="227dp"
-        android:layout_height="36dp"
+        android:id="@+id/rightORwrong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="23dp"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="605dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="89dp"
+        android:layout_marginTop="679dp"
+        android:layout_marginEnd="174dp"
+        android:layout_marginBottom="30dp"
         android:text="Did I know the answer?"
         android:textSize="20dp"
 
@@ -118,33 +142,29 @@
 
     <Button
         android:id="@+id/yes"
-        android:layout_width="84dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="648dp"
-        android:layout_marginEnd="285dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginStart="239dp"
+        android:layout_marginTop="679dp"
+        android:layout_marginEnd="105dp"
         android:text="Yes"
 
         />
 
     <Button
-        android:id="@+id/cardsBtn"
+        android:id="@+id/skipQues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="479dp"
-        android:layout_marginEnd="265dp"
-        android:layout_marginBottom="185dp"
-        android:text="Flip Card"
+        android:layout_marginStart="203dp"
+        android:layout_marginTop="584dp"
+        android:layout_marginEnd="125dp"
+        android:text="@string/nextQues"
 
 
         />
