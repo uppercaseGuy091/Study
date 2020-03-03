@@ -14,6 +14,7 @@ public class ResultsActivity extends AppCompatActivity {
     TextView rightTv;
     TextView wrongTv;
     Button startOverBtn;
+    Button fbShare;
 
 
     @Override
@@ -33,6 +34,7 @@ public class ResultsActivity extends AppCompatActivity {
         rightTv = findViewById(R.id.right);
         wrongTv = findViewById(R.id.wrong);
         startOverBtn = findViewById(R.id.startAgain);
+        fbShare = findViewById(R.id.fb);
 
         resultsTv.setText("Here are the results for user " + username + "\nfor the subject of " + subject + "\nand deck " + deckName);
         rightTv.setText("You knew " + rightAns + " of the questions, good job!");
