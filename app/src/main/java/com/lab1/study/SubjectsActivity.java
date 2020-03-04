@@ -92,10 +92,6 @@ public class SubjectsActivity extends AppCompatActivity {
 
                 final String inputName = input.getText().toString();
 
-                //SharedPreferences.Editor e = mSharedPreferences.edit();
-                //e.putString(PREF_NAME, inputName);
-                //e.commit();
-
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
