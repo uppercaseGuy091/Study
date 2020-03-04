@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -52,6 +54,8 @@ public class DecksActivity extends AppCompatActivity {
 
 
                             final LinearLayout linearLayout = new LinearLayout(DecksActivity.this);
+                            linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
                             final TextView txtView = new TextView(DecksActivity.this);
                             TextView  addSign = new TextView(DecksActivity.this);
 
@@ -59,19 +63,20 @@ public class DecksActivity extends AppCompatActivity {
 
                             linearLayout.setLayoutParams(lnp);
 
-
                             txtView.setTextSize(22);
                             txtView.setHeight(150);
                             txtView.setText(deck.getName());
+                            txtView.setMinWidth(10000);
 
+                           addSign.setText("+");
+                           addSign.setTextSize(22);
+                           addSign.setHeight(150);
+                           addSign.setMinWidth(200);
+                           addSign.setGravity(Gravity.CENTER);
+                          // addSign.setPadding(0,0,125,0);
 
-                            addSign.setText("+");
-                            addSign.setTextSize(22);
-                            addSign.setHeight(150);
-                            addSign.setGravity(Gravity.END);
-
-                            linearLayout.addView(txtView);
                             linearLayout.addView(addSign);
+                            linearLayout.addView(txtView);
 
 
                             txtView.setOnClickListener(new View.OnClickListener() {
