@@ -78,60 +78,22 @@ public class CardsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-
                                 Toast.makeText(CardsActivity.this, "Flip!", Toast.LENGTH_SHORT).show();
-                                questionLayout1.animate().translationY(height).start();
-                                answerLayout1.animate().translationY(-1 * height).withEndAction(new Runnable() {  //withEndAction gets called once the animation is completed
-                                    @Override
-                                    public void run() {
-                                    /*
-                                    //flipping cards (one visible at a time)
-
-                                        if (open == 1) {
-                                            //Toast.makeText(MainActivity.this, "answer", Toast.LENGTH_SHORT).show();
-                                            questionLayout1.animate().translationY(0).start();
-                                            answerLayout1.animate().translationY(0);
-                                            questionLayout1.setVisibility(View.INVISIBLE);
-                                            open = 0;
-                                        } else if (open == 0) {
-                                            questionLayout1.animate().translationY(0).start();
-                                            answerLayout1.animate().translationY(0);
-                                            questionLayout1.setVisibility(View.VISIBLE);
-                                            open = 1;
-                                        }
-                                    }
-                                }).start();
-                                */
-
-                                        //expanding cards (both visible)
-                                        if (open == 1) {
-                                            //Toast.makeText(CardsActivity.this, "OPEN!", Toast.LENGTH_SHORT).show();
-                                            questionLayout1.animate().translationY(height).start();
-                                            answerLayout1.animate().translationY(-1 * height).start();
-                                            open = 0;
-                                        } else {
-                                            //Toast.makeText(CardsActivity.this, "CLOSE!", Toast.LENGTH_SHORT).show();
-                                            questionLayout1.animate().translationY(0).start();
-                                            answerLayout1.animate().translationY(0).start();
-                                            open = 1;
-
-                                        }
-
-
-                                        if (animateBtn.getText().equals("Show answer"))
-                                            animateBtn.setText("Hide answer");
-                                        else
-                                            animateBtn.setText("Show answer");
-                                    }
-                                });
+                                openClose(); //Type one cards transition
+                                //openClose2();  //Type two cards transition
+                                if (animateBtn.getText().equals("Show answer"))
+                                    animateBtn.setText("Hide answer");
+                                else
+                                    animateBtn.setText("Show answer");
                             }
                         });
 
                         skipQuestionBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                skippedCount++;
+                                ifOpen();
 
+                                skippedCount++;
                                 count++;
                                 //sets the question to the textview
                                 if (count != cards.size()) {
@@ -161,6 +123,9 @@ public class CardsActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 count++;
                                 rightAns++;
+
+                                ifOpen();
+
                                 if (count != cards.size()) {
                                     questionTv.setText(cards.get(count).getQuestion());
                                     answerTv.setText(cards.get(count).getAnswer());
@@ -184,6 +149,9 @@ public class CardsActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 count++;
                                 wrongAns++;
+
+                                ifOpen();
+
                                 if (count != cards.size()) {
                                     questionTv.setText(cards.get(count).getQuestion());
                                     answerTv.setText(cards.get(count).getAnswer());
@@ -217,5 +185,57 @@ public class CardsActivity extends AppCompatActivity {
 
     }
 
+
+    public void openClose() {
+
+        if (open == 1) {
+            //Toast.makeText(CardsActivity.this, "OPEN!", Toast.LENGTH_SHORT).show();
+            questionLayout1.animate().translationY(height).start();
+            answerLayout1.animate().translationY(-1 * height).start();
+            open = 0;
+        } else {
+            //Toast.makeText(CardsActivity.this, "CLOSE!", Toast.LENGTH_SHORT).show();
+            questionLayout1.animate().translationY(0).start();
+            answerLayout1.animate().translationY(0).start();
+            open = 1;
+
+        }
+
+    }
+
+    public void ifOpen() {
+        if (open == 0) { //if open.. close
+            questionLayout1.animate().translationY(0).start();
+            answerLayout1.animate().translationY(0).start();
+            open = 1;
+        }
+    }
+//For the developers ;)
+    public void openClose2() {
+        //flipping cards (one visible at a time)
+        questionLayout1.animate().translationY(height).start();
+        answerLayout1.animate().translationY(-1 * height).withEndAction(new Runnable() {  //withEndAction gets called once the animation is completed
+            @Override
+            public void run() {
+
+                if (open == 1) {
+                    //Toast.makeText(MainActivity.this, "answer", Toast.LENGTH_SHORT).show();
+                    questionLayout1.animate().translationY(0).start();
+                    answerLayout1.animate().translationY(0);
+                    questionLayout1.setVisibility(View.INVISIBLE);
+                    open = 0;
+                } else if (open == 0) {
+                    questionLayout1.animate().translationY(0).start();
+                    answerLayout1.animate().translationY(0);
+                    questionLayout1.setVisibility(View.VISIBLE);
+                    open = 1;
+                }
+            }
+        }).start();
+
+    }
+
+
+//End
 }
 
