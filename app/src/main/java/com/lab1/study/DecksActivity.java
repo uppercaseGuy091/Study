@@ -159,12 +159,8 @@ public class DecksActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-
-               // final String inputName = question.getText().toString();
-
-                    //SharedPreferences.Editor e = mSharedPreferences.edit();
-                    //e.putString(PREF_NAME, inputName);
-                    //e.commit();
+                questionArray.add(question.getText().toString());
+                answerArray.add(answer.getText().toString());
 
                     Thread thread = new Thread(new Runnable() {
                         @Override
@@ -224,10 +220,6 @@ public class DecksActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
 
                 final String inputName = input.getText().toString();
-
-                //SharedPreferences.Editor e = mSharedPreferences.edit();
-                //e.putString(PREF_NAME, inputName);
-                //e.commit();
 
                 Thread thread = new Thread(new Runnable() {
                     @Override
