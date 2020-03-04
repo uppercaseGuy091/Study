@@ -24,6 +24,13 @@ public class SubjectsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects);
 
+        start();
+
+
+    }
+
+    private void start(){
+
         final String username = this.getIntent().getExtras().getString("username"); // To be sent to next activity
         final String deckName = this.getIntent().getExtras().getString("deckName");
 
@@ -76,6 +83,8 @@ public class SubjectsActivity extends AppCompatActivity {
 
 
     public void addSubject() {
+
+        final LinearLayout subjectLayout = findViewById(R.id.ListLayout);
         //show a dialog to ask for subject name
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Add Subject");
@@ -97,6 +106,8 @@ public class SubjectsActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             DbConnection.getInstance().addSubjectToDB(inputName);
+                            subjectLayout.removeViewsInLayout(1,subjectLayout.getChildCount()-1);
+                            start();
 
                         } catch (Exception e) {
                             e.printStackTrace();

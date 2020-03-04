@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Message;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -32,9 +34,18 @@ public class DecksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decks);
 
+
+        start();
+
+    }
+
+
+    private void start() {
+
         Intent getIntent = getIntent();
         final String subjectName = getIntent.getStringExtra("subject");
         final String username = getIntent.getStringExtra("username");
+
 
         TextView title = (TextView) (findViewById(R.id.title));
         title.setText(subjectName + " Decks");
@@ -57,7 +68,7 @@ public class DecksActivity extends AppCompatActivity {
                             linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
                             final TextView txtView = new TextView(DecksActivity.this);
-                            TextView  addSign = new TextView(DecksActivity.this);
+                            TextView addSign = new TextView(DecksActivity.this);
 
                             LinearLayout.LayoutParams lnp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
@@ -68,12 +79,12 @@ public class DecksActivity extends AppCompatActivity {
                             txtView.setText(deck.getName());
                             txtView.setMinWidth(10000);
 
-                           addSign.setText("+");
-                           addSign.setTextSize(22);
-                           addSign.setHeight(150);
-                           addSign.setMinWidth(200);
-                           addSign.setGravity(Gravity.CENTER);
-                          // addSign.setPadding(0,0,125,0);
+                            addSign.setText("+");
+                            addSign.setTextSize(22);
+                            addSign.setHeight(150);
+                            addSign.setMinWidth(200);
+                            addSign.setGravity(Gravity.CENTER);
+                            // addSign.setPadding(0,0,125,0);
 
                             linearLayout.addView(addSign);
                             linearLayout.addView(txtView);
@@ -116,14 +127,15 @@ public class DecksActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
-    public void addCard(final int deckId){
+
+    public void addCard(final int deckId) {
 
 
         //show a dialog to ask for subject name
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
 
 
         LinearLayout layout = new LinearLayout(this);
@@ -140,7 +152,7 @@ public class DecksActivity extends AppCompatActivity {
         answer.setHint("Answer");
         layout.addView(answer); // Another add method
 
-        alert.setMessage("");
+        alert.setMessage("Enter answer and question");
 
         alert.setPositiveButton("Add Card", null);
         alert.setNegativeButton("Cancel", null);
@@ -155,11 +167,13 @@ public class DecksActivity extends AppCompatActivity {
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((answer.getText().toString().isEmpty())|| (question.getText().toString().isEmpty()) ){
-                    dialog.setMessage("Enter question and answer");
-                }else {
+                if ((answer.getText().toString().isEmpty()) || (question.getText().toString().isEmpty())) {
+                    dialog.setMessage("No question and answer entered");
+                    dialog.setMessage(Html.fromHtml("<font color='#FF0000'>No question and answer entered</font>"));
+                } else {
                     questionArray.add(question.getText().toString());
-                    answerArray.add(answer.getText().toString());}
+                    answerArray.add(answer.getText().toString());
+                }
 
             }
 
@@ -181,11 +195,12 @@ public class DecksActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if ((answer.getText().toString().isEmpty())|| (question.getText().toString().isEmpty()) ){
-                    dialog.setMessage("Enter question and answer");
-                }else {
+                if ((answer.getText().toString().isEmpty()) || (question.getText().toString().isEmpty())) {
+
+                } else {
                     questionArray.add(question.getText().toString());
-                    answerArray.add(answer.getText().toString());}
+                    answerArray.add(answer.getText().toString());
+                }
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -210,17 +225,14 @@ public class DecksActivity extends AppCompatActivity {
             }
 
 
-
-
         });
-
 
 
     }
 
 
-
-    public void addDeck(final String subjectName){
+    public void addDeck(final String subjectName) {
+        final LinearLayout decksLayout = findViewById(R.id.ListLayout);
         //show a dialog to ask for subject name
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Add Deck");
@@ -242,24 +254,11 @@ public class DecksActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             DbConnection.getInstance().addDeckToDB(inputName, subjectName);
-                            finish();
+                            decksLayout.removeViewsInLayout(1,decksLayout.getChildCount()-1);
+                            start();
                         } catch (Exception e) {
                             e.printStackTrace();
-                           /* final String exceptionMessage = e.getMessage();
-                            SubjectsActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (exceptionMessage.contains("subject")) {
-                                        usernameTxtView.setVisibility(View.VISIBLE);
-                                        scrollView.scrollTo(0, 0);
 
-                                    } else if (exceptionMessage.contains("email")) {
-                                        emailTxtView.setVisibility(View.VISIBLE);
-                                        scrollView.scrollTo(0, emailTxtView.getTop());
-                                    }
-
-                                }
-                            });*/
 
                         }
                     }
