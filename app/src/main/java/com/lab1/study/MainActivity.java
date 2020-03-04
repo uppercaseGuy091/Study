@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         alert.setTitle(MainActivity.this.getResources().getText(R.string.forgot_password));
         alert.setMessage(MainActivity.this.getResources().getText(R.string.password_dialog_message));
 
+
         final EditText input = new EditText(alert.getContext());
         input.requestFocus();
         alert.setView(input);
