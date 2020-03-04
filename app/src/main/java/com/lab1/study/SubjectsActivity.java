@@ -97,24 +97,9 @@ public class SubjectsActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             DbConnection.getInstance().addSubjectToDB(inputName);
-                            finish();
+
                         } catch (Exception e) {
                             e.printStackTrace();
-                           /* final String exceptionMessage = e.getMessage();
-                            SubjectsActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (exceptionMessage.contains("subject")) {
-                                        usernameTxtView.setVisibility(View.VISIBLE);
-                                        scrollView.scrollTo(0, 0);
-
-                                    } else if (exceptionMessage.contains("email")) {
-                                        emailTxtView.setVisibility(View.VISIBLE);
-                                        scrollView.scrollTo(0, emailTxtView.getTop());
-                                    }
-
-                                }
-                            });*/
 
                         }
                     }
