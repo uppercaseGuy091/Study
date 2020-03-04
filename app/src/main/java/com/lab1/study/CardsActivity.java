@@ -55,8 +55,7 @@ public class CardsActivity extends AppCompatActivity {
         questionLayout1.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                //Fetch height
-                height = ((questionLayout1.getHeight()) / 2) + 10; //divide it by two so it wont go too much on both sided(up and down)
+                height = ((questionLayout1.getHeight()) / 2) + 10; //divide it by two so it wont go too much on both sides (up and down)
 
             }
         });
@@ -78,9 +77,11 @@ public class CardsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                Toast.makeText(CardsActivity.this, "Flip!", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(CardsActivity.this, "Flip!", Toast.LENGTH_SHORT).show();
+
                                 openClose(); //Type one cards transition
                                 //openClose2();  //Type two cards transition
+
                                 if (animateBtn.getText().equals("Show answer"))
                                     animateBtn.setText("Hide answer");
                                 else
@@ -95,7 +96,7 @@ public class CardsActivity extends AppCompatActivity {
 
                                 skippedCount++;
                                 count++;
-                                //sets the question to the textview
+
                                 if (count != cards.size()) {
                                     questionTv.setText(cards.get(count).getQuestion());
                                     answerTv.setText(cards.get(count).getAnswer());
@@ -198,9 +199,7 @@ public class CardsActivity extends AppCompatActivity {
             questionLayout1.animate().translationY(0).start();
             answerLayout1.animate().translationY(0).start();
             open = 1;
-
         }
-
     }
 
     public void ifOpen() {
@@ -210,7 +209,9 @@ public class CardsActivity extends AppCompatActivity {
             open = 1;
         }
     }
-//For the developers ;)
+
+
+    //For the developers ;)
     public void openClose2() {
         //flipping cards (one visible at a time)
         questionLayout1.animate().translationY(height).start();
@@ -238,4 +239,3 @@ public class CardsActivity extends AppCompatActivity {
 
 //End
 }
-
