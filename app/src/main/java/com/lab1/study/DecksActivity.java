@@ -117,7 +117,8 @@ public class DecksActivity extends AppCompatActivity {
 
 
         //show a dialog to ask for subject name
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
 
 
         LinearLayout layout = new LinearLayout(this);
@@ -134,72 +135,82 @@ public class DecksActivity extends AppCompatActivity {
         answer.setHint("Answer");
         layout.addView(answer); // Another add method
 
+        alert.setMessage("");
+
+        alert.setPositiveButton("Add Card", null);
+        alert.setNegativeButton("Cancel", null);
+        alert.setNeutralButton("Done", null);
+
         alert.setView(layout); // Again this is a set method, not add
 
-        // Make an "OK" button to save the name
-        alert.setPositiveButton("add card", new DialogInterface.OnClickListener() {
+        final AlertDialog dialog = alert.create();
+        dialog.show();
 
+        // Make an "OK" button to save the name
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                questionArray.add(question.getText().toString());
-                answerArray.add(answer.getText().toString());
-                addCard(deckId);
+            public void onClick(View v) {
+                if ((answer.getText().toString().isEmpty())|| (question.getText().toString().isEmpty()) ){
+                    dialog.setMessage("Enter question and answer");
+                }else {
+                    questionArray.add(question.getText().toString());
+                    answerArray.add(answer.getText().toString());}
 
             }
+
         });
 
         // Make a "Cancel" button that simply dismisses the alert
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
-
-        alert.setNeutralButton("Done", new DialogInterface.OnClickListener() {
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
+                dialog.cancel();
 
-                questionArray.add(question.getText().toString());
-                answerArray.add(answer.getText().toString());
+            }
 
-                    Thread thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                for (int i = 0; i < questionArray.size(); i++) {
-                                    DbConnection.getInstance().addCardToDB(questionArray.get(i), answerArray.get(i), deckId);
-                                    finish();
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                           /* final String exceptionMessage = e.getMessage();
-                            SubjectsActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (exceptionMessage.contains("subject")) {
-                                        usernameTxtView.setVisibility(View.VISIBLE);
-                                        scrollView.scrollTo(0, 0);
-
-                                    } else if (exceptionMessage.contains("email")) {
-                                        emailTxtView.setVisibility(View.VISIBLE);
-                                        scrollView.scrollTo(0, emailTxtView.getTop());
-                                    }
-
-                                }
-                            });*/
-
-                            }
-                        }
-                    });
-                    thread.start();
-
-                    Toast.makeText(getApplicationContext(), "Your questions are added", Toast.LENGTH_LONG).show();
-                }
 
         });
 
-        alert.show();
+
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if ((answer.getText().toString().isEmpty())|| (question.getText().toString().isEmpty()) ){
+                    dialog.setMessage("Enter question and answer");
+                }else {
+                    questionArray.add(question.getText().toString());
+                    answerArray.add(answer.getText().toString());}
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            for (int i = 0; i < questionArray.size(); i++) {
+                                DbConnection.getInstance().addCardToDB(questionArray.get(i), answerArray.get(i), deckId);
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+
+                        }
+                    }
+                });
+                thread.start();
+
+                dialog.cancel();
+
+                Toast.makeText(getApplicationContext(), "Your questions are added", Toast.LENGTH_LONG).show();
+
+            }
+
+
+
+
+        });
+
+
+
     }
 
 
