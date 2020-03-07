@@ -5,16 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,9 +28,7 @@ public class DecksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decks);
 
-
         start();
-
     }
 
 
@@ -63,7 +55,6 @@ public class DecksActivity extends AppCompatActivity {
                     public void run() {
                         for (final Deck deck : decks) {
 
-
                             final LinearLayout linearLayout = new LinearLayout(DecksActivity.this);
                             linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
@@ -84,7 +75,6 @@ public class DecksActivity extends AppCompatActivity {
                             addSign.setHeight(150);
                             addSign.setMinWidth(200);
                             addSign.setGravity(Gravity.CENTER);
-                            // addSign.setPadding(0,0,125,0);
 
                             linearLayout.addView(addSign);
                             linearLayout.addView(txtView);
@@ -99,6 +89,7 @@ public class DecksActivity extends AppCompatActivity {
                                     intent.putExtra("subject", subjectName);
                                     intent.putExtra("deckName", deck.getName());
                                     startActivity(intent);
+
                                 }
                             });
 
@@ -133,21 +124,19 @@ public class DecksActivity extends AppCompatActivity {
 
     public void addCard(final int deckId) {
 
-
         //show a dialog to ask for subject name
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-// Add a TextView here for the "Title" label, as noted in the comments
+        //Add a TextView here for the "Title" label, as noted in the comments
         alert.setTitle("Add Card");
         final EditText question = new EditText(this);
         question.setHint("Question");
         layout.addView(question); // Notice this is an add method
 
-// Add another TextView here for the "Description" label
+        //Add another TextView here for the "Description" label
         final EditText answer = new EditText(this);
         answer.setHint("Answer");
         layout.addView(answer); // Another add method
@@ -163,7 +152,7 @@ public class DecksActivity extends AppCompatActivity {
         final AlertDialog dialog = alert.create();
         dialog.show();
 
-        // Make an "OK" button to save the name
+        //Make an "OK" button to save the name
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +168,7 @@ public class DecksActivity extends AppCompatActivity {
 
         });
 
-        // Make a "Cancel" button that simply dismisses the alert
+        //Make a "Cancel" button that simply dismisses the alert
         dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,11 +227,11 @@ public class DecksActivity extends AppCompatActivity {
         alert.setTitle("Add Deck");
         alert.setMessage("Enter the name of the Deck");
 
-        // Create EditText for entry
+        //Create EditText for entry
         final EditText input = new EditText(this);
         alert.setView(input);
 
-        // Make an "OK" button to save the name
+        //Make an "OK" button to save the name
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -254,7 +243,7 @@ public class DecksActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             DbConnection.getInstance().addDeckToDB(inputName, subjectName);
-                            decksLayout.removeViewsInLayout(1,decksLayout.getChildCount()-1);
+                            decksLayout.removeViewsInLayout(1, decksLayout.getChildCount() - 1);
                             start();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -269,7 +258,7 @@ public class DecksActivity extends AppCompatActivity {
             }
         });
 
-        // Make a "Cancel" button that simply dismisses the alert
+        //Make a "Cancel" button that simply dismisses the alert
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
