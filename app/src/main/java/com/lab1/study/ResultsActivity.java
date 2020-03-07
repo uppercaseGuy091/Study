@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -117,7 +118,11 @@ public class ResultsActivity extends AppCompatActivity {
                 v.getHeight(), Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(bitmap);
-        canvas.drawColor(ResultsActivity.this.getResources().getColor(R.color.lightGray,getTheme()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            canvas.drawColor(ResultsActivity.this.getResources().getColor(R.color.lightGray , getTheme()));
+        }else {
+            canvas.drawColor(ResultsActivity.this.getResources().getColor(R.color.lightGray ));
+        }
         v.draw(canvas);
 
         return bitmap;
