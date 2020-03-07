@@ -69,112 +69,120 @@ public class CardsActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        questionTv.setText(cards.get(count).getQuestion());
+                        if (cards.isEmpty()) {
+                            Toast.makeText(CardsActivity.this, "No cards in this deck!", Toast.LENGTH_SHORT).show();
+                            Intent passValues = new Intent(CardsActivity.this, DecksActivity.class);
+                            passValues.putExtra("username", username);
+                            passValues.putExtra("subject", subject);
+                            startActivity(passValues);
+                        } else {
 
-                        answerTv.setText(cards.get(count).getAnswer());
+                            questionTv.setText(cards.get(count).getQuestion());
 
-                        animateBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                            answerTv.setText(cards.get(count).getAnswer());
 
-                                //Toast.makeText(CardsActivity.this, "Flip!", Toast.LENGTH_SHORT).show();
+                            animateBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
 
-                                openClose(); //Type one cards transition
-                                //openClose2();  //Type two cards transition
+                                    //Toast.makeText(CardsActivity.this, "Flip!", Toast.LENGTH_SHORT).show();
 
-                                if (animateBtn.getText().equals("Show answer"))
-                                    animateBtn.setText("Hide answer");
-                                else
-                                    animateBtn.setText("Show answer");
-                            }
-                        });
+                                    openClose(); //Type one cards transition
+                                    //openClose2();  //Type two cards transition
 
-                        skipQuestionBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ifOpen();
-
-                                skippedCount++;
-                                count++;
-
-                                if (count != cards.size()) {
-                                    questionTv.setText(cards.get(count).getQuestion());
-                                    answerTv.setText(cards.get(count).getAnswer());
-                                    animateBtn.setText("Show answer");
+                                    if (animateBtn.getText().equals("Show answer"))
+                                        animateBtn.setText("Hide answer");
+                                    else
+                                        animateBtn.setText("Show answer");
                                 }
+                            });
+
+                            skipQuestionBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ifOpen();
+
+                                    skippedCount++;
+                                    count++;
+
+                                    if (count != cards.size()) {
+                                        questionTv.setText(cards.get(count).getQuestion());
+                                        answerTv.setText(cards.get(count).getAnswer());
+                                        animateBtn.setText("Show answer");
+                                    }
 
 
-                                //opens results activity after all the questions have passed
-                                if (count == cards.size()) {
-                                    Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
-                                    passValues.putExtra("username", username);
-                                    passValues.putExtra("subject", subject);
-                                    passValues.putExtra("deckId", deckId);
-                                    passValues.putExtra("correctAns", rightAns);
-                                    passValues.putExtra("wrongAns", wrongAns);
-                                    passValues.putExtra("deckName", deckName);
-                                    passValues.putExtra("skippedCount", skippedCount);
-                                    startActivity(passValues);
+                                    //opens results activity after all the questions have passed
+                                    if (count == cards.size()) {
+                                        Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
+                                        passValues.putExtra("username", username);
+                                        passValues.putExtra("subject", subject);
+                                        passValues.putExtra("deckId", deckId);
+                                        passValues.putExtra("correctAns", rightAns);
+                                        passValues.putExtra("wrongAns", wrongAns);
+                                        passValues.putExtra("deckName", deckName);
+                                        passValues.putExtra("skippedCount", skippedCount);
+                                        startActivity(passValues);
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                        yesBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                count++;
-                                rightAns++;
+                            yesBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    count++;
+                                    rightAns++;
 
-                                ifOpen();
+                                    ifOpen();
 
-                                if (count != cards.size()) {
-                                    questionTv.setText(cards.get(count).getQuestion());
-                                    answerTv.setText(cards.get(count).getAnswer());
+                                    if (count != cards.size()) {
+                                        questionTv.setText(cards.get(count).getQuestion());
+                                        answerTv.setText(cards.get(count).getAnswer());
+                                    }
+                                    if (count == cards.size()) {
+                                        Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
+                                        passValues.putExtra("username", username);
+                                        passValues.putExtra("subject", subject);
+                                        passValues.putExtra("deckId", deckId);
+                                        passValues.putExtra("correctAns", rightAns);
+                                        passValues.putExtra("wrongAns", wrongAns);
+                                        passValues.putExtra("deckName", deckName);
+                                        passValues.putExtra("skippedCount", skippedCount);
+                                        startActivity(passValues);
+                                    }
                                 }
-                                if (count == cards.size()) {
-                                    Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
-                                    passValues.putExtra("username", username);
-                                    passValues.putExtra("subject", subject);
-                                    passValues.putExtra("deckId", deckId);
-                                    passValues.putExtra("correctAns", rightAns);
-                                    passValues.putExtra("wrongAns", wrongAns);
-                                    passValues.putExtra("deckName", deckName);
-                                    passValues.putExtra("skippedCount", skippedCount);
-                                    startActivity(passValues);
+                            });
+
+                            noBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    count++;
+                                    wrongAns++;
+
+                                    ifOpen();
+
+                                    if (count != cards.size()) {
+                                        questionTv.setText(cards.get(count).getQuestion());
+                                        answerTv.setText(cards.get(count).getAnswer());
+                                    }
+
+                                    if (count == cards.size()) {
+                                        Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
+                                        passValues.putExtra("username", username);
+                                        passValues.putExtra("subject", subject);
+                                        passValues.putExtra("deckId", deckId);
+                                        passValues.putExtra("correctAns", rightAns);
+                                        passValues.putExtra("wrongAns", wrongAns);
+                                        passValues.putExtra("deckName", deckName);
+                                        passValues.putExtra("skippedCount", skippedCount);
+                                        startActivity(passValues);
+                                        finish();
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                        noBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                count++;
-                                wrongAns++;
-
-                                ifOpen();
-
-                                if (count != cards.size()) {
-                                    questionTv.setText(cards.get(count).getQuestion());
-                                    answerTv.setText(cards.get(count).getAnswer());
-                                }
-
-                                if (count == cards.size()) {
-                                    Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
-                                    passValues.putExtra("username", username);
-                                    passValues.putExtra("subject", subject);
-                                    passValues.putExtra("deckId", deckId);
-                                    passValues.putExtra("correctAns", rightAns);
-                                    passValues.putExtra("wrongAns", wrongAns);
-                                    passValues.putExtra("deckName", deckName);
-                                    passValues.putExtra("skippedCount", skippedCount);
-                                    startActivity(passValues);
-                                    finish();
-                                }
-                            }
-                        });
-
+                        }
                     }
-
                 });
 
 
