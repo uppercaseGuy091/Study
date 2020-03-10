@@ -36,7 +36,7 @@ public class ResultsActivity extends AppCompatActivity {
         final int wrongAns = getIntent.getIntExtra("wrongAns", 0);
         final int rightAns = getIntent.getIntExtra("correctAns", 0);
         final String deckName = getIntent.getStringExtra("deckName");
-        final int skippedCount = getIntent.getIntExtra("skippedCount",0);
+        final int skippedCount = getIntent.getIntExtra("skippedCount", 0);
 
 
         resultsTv = findViewById(R.id.results);
@@ -119,9 +119,9 @@ public class ResultsActivity extends AppCompatActivity {
 
         Canvas canvas = new Canvas(bitmap);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            canvas.drawColor(ResultsActivity.this.getResources().getColor(R.color.lightGray , getTheme()));
-        }else {
-            canvas.drawColor(ResultsActivity.this.getResources().getColor(R.color.lightGray ));
+            canvas.drawColor(ResultsActivity.this.getResources().getColor(R.color.lightGray, getTheme()));
+        } else {
+            canvas.drawColor(ResultsActivity.this.getResources().getColor(R.color.lightGray));
         }
         v.draw(canvas);
 

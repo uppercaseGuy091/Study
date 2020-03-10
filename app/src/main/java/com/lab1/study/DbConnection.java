@@ -71,7 +71,7 @@ public class DbConnection {
 
         } catch (SQLException e) {
             setUrl("jdbc:mysql://ricky.heliohost.org:3306/studycar_StudyCards?useSSL=false&user=studycar_StudyCa&password=StudyCards");
-            return logIn(username,password);
+            return logIn(username, password);
         } finally {
             cleanUp();
         }
@@ -92,7 +92,7 @@ public class DbConnection {
             }
         } catch (SQLException e) {
             setUrl("jdbc:mysql://ricky.heliohost.org:3306/studycar_StudyCards?useSSL=false&user=studycar_StudyCa&password=StudyCards");
-            addUser(username,password,email);
+            addUser(username, password, email);
         } finally {
             cleanUp();
         }
@@ -287,7 +287,6 @@ public class DbConnection {
 
         return cards;
     }
-
 
 
     public String getPassword(String email) {

@@ -138,6 +138,7 @@ public class CardsActivity extends AppCompatActivity {
                                     if (count != cards.size()) {
                                         questionTv.setText(cards.get(count).getQuestion());
                                         answerTv.setText(cards.get(count).getAnswer());
+                                        animateBtn.setText("Show answer");
                                     }
                                     if (count == cards.size()) {
                                         Intent passValues = new Intent(CardsActivity.this, ResultsActivity.class);
@@ -164,6 +165,7 @@ public class CardsActivity extends AppCompatActivity {
                                     if (count != cards.size()) {
                                         questionTv.setText(cards.get(count).getQuestion());
                                         answerTv.setText(cards.get(count).getAnswer());
+                                        animateBtn.setText("Show answer");
                                     }
 
                                     if (count == cards.size()) {
@@ -198,12 +200,12 @@ public class CardsActivity extends AppCompatActivity {
     public void openClose() {
 
         if (open == 1) {
-            //Toast.makeText(CardsActivity.this, "OPEN!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(CardsActivity.this, "Open!", Toast.LENGTH_SHORT).show();
             questionLayout1.animate().translationY(height).start();
             answerLayout1.animate().translationY(-1 * height).start();
             open = 0;
         } else {
-            //Toast.makeText(CardsActivity.this, "CLOSE!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(CardsActivity.this, "Close!", Toast.LENGTH_SHORT).show();
             questionLayout1.animate().translationY(0).start();
             answerLayout1.animate().translationY(0).start();
             open = 1;
@@ -228,7 +230,6 @@ public class CardsActivity extends AppCompatActivity {
             public void run() {
 
                 if (open == 1) {
-                    //Toast.makeText(MainActivity.this, "answer", Toast.LENGTH_SHORT).show();
                     questionLayout1.animate().translationY(0).start();
                     answerLayout1.animate().translationY(0);
                     questionLayout1.setVisibility(View.INVISIBLE);
@@ -244,6 +245,4 @@ public class CardsActivity extends AppCompatActivity {
 
     }
 
-
-//End
 }
