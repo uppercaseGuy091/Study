@@ -10,6 +10,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private Handler mHandler;
     private Runnable mRunnable;
+    private int delay = 500;
 
 
 
@@ -19,19 +20,29 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
-        int delay = 1500;
-
-        new Handler().postDelayed(new Runnable() {
+        final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(i);
+                DbConnection.getInstance().logIn("","");
+                SplashActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                                startActivity(i);
 
-                finish();
+                                finish();
+                            }
+                        },500);
+
+                    }
+                });
+
             }
-        },delay);
-
+        });
+        thread.start();
 
     }
 }

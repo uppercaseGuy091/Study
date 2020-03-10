@@ -70,14 +70,8 @@ public class DbConnection {
             }
 
         } catch (SQLException e) {
-            if (e.getErrorCode() == 1203) {
-                Log.i("SQLException", "There is a limited number of available connections");
-            }else if(e.getErrorCode()==1040){
-                setUrl("jdbc:mysql://ricky.heliohost.org:3306/studycar_StudyCards?useSSL=false&user=studycar_StudyCa&password=StudyCards");
-                return logIn(username,password);
-            } else {
-                Log.i("SQLException", e.getErrorCode() + e.toString());
-            }
+            setUrl("jdbc:mysql://ricky.heliohost.org:3306/studycar_StudyCards?useSSL=false&user=studycar_StudyCa&password=StudyCards");
+            return logIn(username,password);
         } finally {
             cleanUp();
         }
@@ -97,14 +91,8 @@ public class DbConnection {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
-            if (e.getErrorCode() == 1203) {
-                Log.i("SQLException", "There is a limited number of available connections");
-            }else if(e.getErrorCode()==1040){
-                setUrl("jdbc:mysql://ricky.heliohost.org:3306/studycar_StudyCards?useSSL=false&user=studycar_StudyCa&password=StudyCards");
-                addUser(username,password,email);
-            } else {
-                Log.i("SQLException", e.getErrorCode() + e.toString());
-            }
+            setUrl("jdbc:mysql://ricky.heliohost.org:3306/studycar_StudyCards?useSSL=false&user=studycar_StudyCa&password=StudyCards");
+            addUser(username,password,email);
         } finally {
             cleanUp();
         }
