@@ -3,7 +3,6 @@ package com.lab1.study;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,11 +24,9 @@ public class SubjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subjects);
 
         start();
-
-
     }
 
-    private void start(){
+    private void start() {
 
         final String username = this.getIntent().getExtras().getString("username"); // To be sent to next activity
         final String deckName = this.getIntent().getExtras().getString("deckName");
@@ -106,7 +103,7 @@ public class SubjectsActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             DbConnection.getInstance().addSubjectToDB(inputName);
-                            subjectLayout.removeViewsInLayout(1,subjectLayout.getChildCount()-1);
+                            subjectLayout.removeViewsInLayout(1, subjectLayout.getChildCount() - 1);
                             start();
 
                         } catch (Exception e) {

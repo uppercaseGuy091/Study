@@ -8,12 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private Handler mHandler;
-    private Runnable mRunnable;
-    private int delay = 500;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
         final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                DbConnection.getInstance().logIn("","");
+                DbConnection.getInstance().logIn("", "");
                 SplashActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -35,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
 
                                 finish();
                             }
-                        },500);
+                        }, 400);
 
                     }
                 });
