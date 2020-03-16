@@ -156,12 +156,15 @@ public class DecksActivity extends AppCompatActivity {
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if ((answer.getText().toString().isEmpty()) || (question.getText().toString().isEmpty())) {
                     dialog.setMessage("No question and answer entered");
                     dialog.setMessage(Html.fromHtml("<font color='#FF0000'>No question and answer entered</font>"));
                 } else {
                     questionArray.add(question.getText().toString());
                     answerArray.add(answer.getText().toString());
+                    question.setText("");
+                    answer.setText("");
                 }
 
             }
