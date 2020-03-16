@@ -190,8 +190,8 @@ public class DecksActivity extends AppCompatActivity {
                 if ((answer.getText().toString().isEmpty()) || (question.getText().toString().isEmpty())) {
 
                 } else {
-                    questionArray.add(question.getText().toString());
-                    answerArray.add(answer.getText().toString());
+                    //questionArray.add(question.getText().toString());
+                    //answerArray.add(answer.getText().toString());
                 }
                 Thread thread = new Thread(new Runnable() {
                     @Override
@@ -239,25 +239,33 @@ public class DecksActivity extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int whichButton) {
 
+
+
                 final String inputName = input.getText().toString();
 
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            DbConnection.getInstance().addDeckToDB(inputName, subjectName);
-                            decksLayout.removeViewsInLayout(1, decksLayout.getChildCount() - 1);
-                            start();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                if ((input.getText().toString().isEmpty())) {
+                    Toast.makeText(getApplicationContext(), "No name was entered" + inputName, Toast.LENGTH_LONG).show();
+                }else {
 
 
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                DbConnection.getInstance().addDeckToDB(inputName, subjectName);
+                                decksLayout.removeViewsInLayout(1, decksLayout.getChildCount() - 1);
+                                start();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+
+
+                            }
                         }
-                    }
-                });
-                thread.start();
+                    });
+                    thread.start();
 
-                Toast.makeText(getApplicationContext(), "You added the deck, " + inputName, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "You added the deck, " + inputName, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
