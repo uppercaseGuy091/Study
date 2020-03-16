@@ -3,6 +3,7 @@ package com.lab1.study;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -83,7 +84,7 @@ public class SubjectsActivity extends AppCompatActivity {
 
         final LinearLayout subjectLayout = findViewById(R.id.ListLayout);
         //show a dialog to ask for subject name
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Add Subject");
         alert.setMessage("Enter the name of the Subject");
 
@@ -97,6 +98,12 @@ public class SubjectsActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
 
                 final String inputName = input.getText().toString();
+
+                if ((input.getText().toString().isEmpty())) {
+                    Toast.makeText(getApplicationContext(), "No name was entered" + inputName, Toast.LENGTH_LONG).show();
+
+
+                }else {
 
                 Thread thread = new Thread(new Runnable() {
                     @Override
@@ -116,7 +123,9 @@ public class SubjectsActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "You added the subject, " + inputName, Toast.LENGTH_LONG).show();
             }
+            }
         });
+
 
         // Make a "Cancel" button that simply dismisses the alert
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
